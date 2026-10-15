@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="mcbflow.com: Practical browser tools for spreadsheet users. Free, local-first personal web apps.">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src https:; base-uri 'none'; form-action 'none'">
+<title>mcbflow.com: Personal Web Apps</title>
+<link rel="canonical" href="https://mcbflow.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="mcbflow.com">
+<meta property="og:url" content="https://mcbflow.com/">
+<meta property="og:title" content="mcbflow.com: free browser apps by Matthew Broyer">
+<meta property="og:description" content="Free, local-first web apps for money, pay, meals, notes, reading, nutrition, garden, fishing, weather and more. Open them in your browser or install them.">
+<meta property="og:image" content="https://mcbflow.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="mcbflow.com: free browser apps by Matthew Broyer">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>
+// Clickjacking guard: GitHub Pages can't send frame-blocking headers, so refuse to display inside another site's frame.
+if (window.top !== window.self) { document.documentElement.style.display = "none"; try { window.top.location = window.self.location.href; } catch (_) {} }
+</script>
+<link rel="stylesheet" href="/hub.css">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<header class="topbar page-bar">
+ <div class="shell topbarInner">
+  <a class="brand" href="#">
+   <span class="brandMark" aria-hidden="true"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="hbg" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#4B7FF0"/><stop offset=".55" stop-color="#2563EB"/><stop offset="1" stop-color="#1A4FC4"/></linearGradient><clipPath id="hbc"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#hbc)"><rect width="64" height="64" fill="url(#hbg)"/><g fill="#fff"><circle cx="20" cy="20" r="5.2"/><circle cx="32" cy="20" r="5.2"/><circle cx="20" cy="32" r="5.2"/><circle cx="32" cy="32" r="5.2"/><circle cx="44" cy="32" r="5.2"/><circle cx="20" cy="44" r="5.2"/><circle cx="32" cy="44" r="5.2"/><circle cx="44" cy="44" r="5.2"/></g>
+<path d="M39.5 24.5 48 16M41 16h7v7" fill="none" stroke="#F2B640" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></g></svg></span>
+   <span>
+    <span class="brandName">mcbflow.com</span>
+    <span class="brandSub">Personal web apps</span>
+   </span>
+  </a>
+  <div class="headerActions actions">
+   <nav class="topnav" id="mainNav" aria-label="Site navigation">
+    <a href="#apps">Apps</a>
+    <a href="#status-title">Status</a>
+    <a href="#about">About</a>
+    <a href="#faq">FAQ</a>
+    <span class="navStatus" title="Linked app reachability">
+     <span id="navStatusDot" class="statusDot dim" aria-hidden="true"></span>
+     <span id="navStatusText">Not checked</span>
+    </span>
+   </nav>
+   <a id="accountBtn" class="btn sm acctBtn" href="/account.html" title="Optional account for syncing app data"><span id="acctDot" class="statusDot dim" aria-hidden="true"></span><span id="acctLbl">Sign in</span></a>
+   <button id="themeToggle" class="themesw" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Dark mode"><span class="tk"><svg class="i-sun" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="10" r="3.2"/><path d="M10 2.5v1.8M10 15.7v1.8M2.5 10h1.8M15.7 10h1.8M4.7 4.7l1.3 1.3M14 14l1.3 1.3M4.7 15.3 6 14M14 6l1.3-1.3"/></svg><svg class="i-moon" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M16.5 12.2A6.6 6.6 0 0 1 7.8 3.5a6.6 6.6 0 1 0 8.7 8.7Z"/></svg><i class="th"></i></span></button>
+   <button id="mobileMenuBtn" class="btn btn-icon menu-toggle tb" type="button" aria-expanded="false" aria-label="Toggle menu" aria-controls="mainNav"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+  </div>
+  <div id="scrollProgress" class="scroll-progress" role="presentation"></div>
+ </div>
+</header>
+
+<main id="main-content" class="shell">
+ <section class="hero" aria-labelledby="heroTitle">
+  <div class="heroGrid">
+   <div class="heroMain">
+    <span class="kicker"><span class="kickerMark" aria-hidden="true"></span>For spreadsheet power users</span>
+    <h1 id="heroTitle">Ditch complex spreadsheets for fast browser apps.</h1>
+    <p class="heroCopy">You rely on spreadsheets to manage finances, meals, and tasks because standard software is bloated. These tools turn those kinds of systems into lightweight browser apps that load quickly and can keep data on your device.</p>
+    <a href="#apps" class="btn btnPrimary">Browse applications <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+   </div>
+   <aside class="heroSide">
+    <div class="sideTitle">Built for speed</div>
+    <ul class="sideText">
+     <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>This hub runs in your browser.</li>
+     <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Hub preferences stay on this device.</li>
+     <li><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No paywalls. Accounts are optional and free.</li>
+    </ul>
+   </aside>
+  </div>
+ </section>
+
+ <section id="apps" class="section" aria-labelledby="apps-title">
+  <div class="sectionHead">
+   <h2 id="apps-title" class="sectionTitle">Applications</h2>
+   <div id="resultMeta" class="sectionMeta">10 tools</div>
+  </div>
+  <div class="controls">
+   <label for="searchInput" class="searchWrap">
+    <span class="vh">Search applications and FAQs</span>
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>
+    <input id="searchInput" class="search" type="search" placeholder="Search apps and FAQs…" autocomplete="off">
+   </label>
+   <div id="filters" class="filters" role="group" aria-label="Filter applications"></div>
+  </div>
+  <div id="toolsGrid" class="grid"></div>
+  <div id="emptyState" class="empty" hidden>
+   <strong>No apps match that search.</strong>
+   <span>Try a different term, or pick “All” to see every tool.</span>
+  </div>
+ </section>
+
+ <section class="section" aria-labelledby="status-title">
+  <div class="sectionHead">
+   <h2 id="status-title" class="sectionTitle">Network status</h2>
+   <div class="sectionMeta">Browser reachability checks. Runs only when you ask.</div>
+  </div>
+  <div class="statusBoard" role="status" aria-live="polite">
+   <div class="statusBlock">
+    <div class="statusLabel">System</div>
+    <div id="systemStatus" class="statusValue white">Not checked</div>
+   </div>
+   <div class="statusBlock">
+    <div class="statusLabel">Reachable</div>
+    <div id="onlineCount" class="statusValue green">—</div>
+   </div>
+   <div class="statusBlock">
+    <div class="statusLabel">Unreachable</div>
+    <div id="offlineCount" class="statusValue white">—</div>
+   </div>
+   <div class="statusBlock statusActions">
+    <button id="refreshStatus" class="btn" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6"/></svg>Check status</button>
+   </div>
+  </div>
+  <p class="statusNote">Checking sends one request from your browser to each linked app’s address, the same as visiting it (those sites’ hosts can see your IP address). It only tests whether each site responds; it is not an uptime guarantee.</p>
+ </section>
+
+ <section id="about" class="section" aria-labelledby="about-title">
+  <h2 id="about-title" class="vh">About</h2>
+  <div class="about">
+   <div class="aboutBlock">
+    <div class="eyebrow">Built for personal workflow</div>
+    <h3>Remove friction from daily tasks.</h3>
+    <p>Track progress without wrestling with complex software.</p>
+    <ul>
+     <li>Apps are designed to load quickly in the browser.</li>
+     <li>Interfaces focus on the task at hand.</li>
+     <li>Accounts are optional and free. Sign in to sync app data across your devices.</li>
+    </ul>
+   </div>
+   <div class="aboutBlock">
+    <div class="eyebrow">Privacy by default on this hub</div>
+    <h3>Keep hub preferences on your device.</h3>
+    <p>Accounts are optional. This page does not use advertising or analytics scripts.</p>
+    <ul>
+     <li>With an optional account, apps sync their text data. Photos, PDFs and other files stay on your device.</li>
+     <li>Pins, theme, and local launch counts save in your browser.</li>
+     <li>Linked tools are separate websites—check each for its own practices.</li>
+    </ul>
+   </div>
+  </div>
+  <div class="disclaimerBox" role="note">
+   <strong>Disclaimer:</strong> These tools are free personal utilities provided as-is for ordinary personal use. They are not professional medical, legal, financial, tax, or investment advice. Do not enter passwords, Social Security numbers, full payment card numbers, or other highly sensitive secrets into browser tools unless you understand the risks. You are responsible for how you use any outputs.
+  </div>
+ </section>
+
+ <section id="faq" class="section" aria-labelledby="faq-title">
+  <div class="sectionHead">
+   <h2 id="faq-title" class="sectionTitle">Frequently asked questions</h2>
+  </div>
+  <div class="faq-list">
+   <div class="faq-item">
+    <button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-ans-1">Where is my data stored on this hub?</button>
+    <div class="faq-content" id="faq-ans-1" aria-hidden="true">
+     <p>On this hub page, preferences such as theme, pinned apps, and local launch counts are stored in your browser’s local storage for this site only. These hub preferences are never uploaded. If you create an optional account, apps you sign in to also save a copy of their data to your account so it can sync between devices; see <strong>Privacy</strong> for details. Linked apps (Money, Meal Prep, and so on) are separate sites—review each app you use.</p>
+    </div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-ans-2">Are these tools free?</button>
+    <div class="faq-content" id="faq-ans-2" aria-hidden="true">
+     <p>This hub and the listed tools are free. Accounts are optional and free too; there’s no paid tier. Individual apps may change over time; if paid features ever appear, they should be stated clearly on that app. There's an optional "Support this site" link in the footer for anyone who wants to help cover hosting costs. It's never required.</p>
+    </div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-ans-account">Do I need an account? What does it do?</button>
+    <div class="faq-content" id="faq-ans-account" aria-hidden="true">
+     <p>No. Every app works without one, saving to your browser as before. An optional free account (on the <a href="/account.html">Account</a> page) lets apps sync their data, such as records, settings and progress, across your devices. Files like photos, PDFs and audiobooks never upload; they stay on the device where you added them. You can export everything synced, delete one app’s synced data, or delete your account at any time. Each app still has import and export as a backup.</p>
+    </div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-ans-install">Can I install these apps like regular apps?</button>
+    <div class="faq-content" id="faq-ans-install" aria-hidden="true">
+     <p>Yes. Press <strong>Install</strong> on an app’s card: the app opens and shows its own install prompt. In Chrome or Edge on a computer or Android, that’s a real Install button. On iPhone or iPad, tap Share, then Add to Home Screen. Firefox on a computer can’t install web apps, so you can still use them in a tab. Installed apps open in their own window and keep your data in the same place as the website version on that device.</p>
+    </div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-ans-3">Can I request a feature or a new tool?</button>
+    <div class="faq-content" id="faq-ans-3" aria-hidden="true">
+     <p>Send feature requests via the email button on the bottom right. There is no guarantee of a response or that a request will be built.</p>
+    </div>
+   </div>
+   <div class="faq-item">
+    <button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-ans-4">How do I export or delete hub data?</button>
+    <div class="faq-content" id="faq-ans-4" aria-hidden="true">
+     <p>Use Export Hub Data or Delete Local Data in the footer. Delete removes this site’s local storage keys for theme, pins, launch counts and the storage notice preference in this browser.</p>
+    </div>
+   </div>
+  </div>
+ </section>
+</main>
+
+<footer class="siteFooter">
+ <div class="shell footerLine">
+  <div><b>mcbflow.com</b> © 2026</div>
+  <div class="footerNote">
+   <span>Independent project · free tools · <code>v6.1.0</code></span>
+   <span class="footerLinks">
+    <a class="flink" href="https://buymeacoffee.com/matthewbroyer" target="_blank" rel="noopener noreferrer">☕ Support this site</a>
+    <button type="button" id="openPrivacy">Privacy</button>
+    <button type="button" id="openTerms">Terms</button>
+    <button type="button" id="exportDataBtn">Export Hub Data</button>
+    <button type="button" id="triggerResetBtn">Delete Local Data</button>
+   </span>
+  </div>
+ </div>
+ <div class="floating-group">
+  <a href="mailto:matthewbroyer@outlook.com" class="float-btn" aria-label="Contact Matthew by email" title="Email"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg></a>
+  <button id="scrollTopBtn" class="float-btn" type="button" aria-label="Scroll back to top" title="Back to top"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+ </div>
+</footer>
+
+<!-- App Details Modal -->
+<div id="modal" class="modal" aria-hidden="true">
+ <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modalHead">
+   <div>
+    <div id="modalCat" class="cat">Category</div>
+    <div id="modalTitle" class="modalTitle">App</div>
+    <div id="modalDomain" class="modalDomain">domain</div>
+   </div>
+   <button class="modalClose" data-close="modal" type="button" aria-label="Close details">×</button>
+  </div>
+  <div class="modalBody">
+   <p id="modalDesc"></p>
+   <div id="modalFeatures" class="modalList"></div>
+   <div class="modalMeta">
+    <div><div class="metaLabel">Reachability</div><div id="modalStatus" class="metaValue">—</div></div>
+    <div><div class="metaLabel">Local launches (this browser)</div><div id="modalLaunches" class="metaValue">0</div></div>
+   </div>
+  </div>
+  <div class="modalFoot">
+   <button id="modalCopy" class="btn" type="button">Copy URL</button>
+   <a id="modalInstall" class="btn" href="#" target="_blank" rel="noopener">Install</a>
+   <a id="modalLaunch" class="btn launch" href="#">Open app</a>
+  </div>
+ </div>
+</div>
+
+<!-- Privacy Modal -->
+<div id="privacyModal" class="modal" aria-hidden="true">
+ <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+  <div class="modalHead">
+   <div><div id="privacyTitle" class="modalTitle">Privacy</div></div>
+   <button class="modalClose" data-close="privacyModal" type="button" aria-label="Close">×</button>
+  </div>
+  <div class="modalBody legalBody">
+   <p><strong>Last updated:</strong> October 2026</p>
+   <p>This page (the mcbflow.com hub) and its Account page are a free personal project run by Matthew Broyer. You don’t need an account to use anything here. The site does not load advertising, analytics, fonts, or scripts from other companies’ servers, and its code does not set cookies. The account sign-in library (supabase-js) is open-source code hosted on this site.</p>
+   <h3>What this hub stores on your device</h3>
+   <ul>
+    <li>Theme preference (light/dark)</li>
+    <li>Pinned app IDs</li>
+    <li>Local launch counts for listed apps</li>
+    <li>Whether you dismissed the local-storage notice</li>
+   </ul>
+   <p>These values are kept in your browser’s local storage for this site. This page does not send them anywhere. They stay until you delete them with <strong>Delete Local Data</strong> in the footer or clear your browser’s site data. <strong>Export Hub Data</strong> saves a copy to your own device.</p>
+   <h3>What leaves your browser</h3>
+   <ul>
+    <li>This site is hosted on GitHub Pages. GitHub logs visitors’ IP addresses for security purposes, as it does for every GitHub Pages site. Those logs are controlled by GitHub, not by this page’s code, and are covered by the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub Privacy Statement</a>.</li>
+    <li>If you press <strong>Check status</strong>, your browser sends one request to each listed app’s address to see whether it responds. Those sites’ hosts can see that request the way they would see a visit. Nothing from this page’s local storage is included.</li>
+    <li>If you open a linked app, your browser goes to that site.</li>
+    <li>If you click “Support this site,” your browser opens buymeacoffee.com, a separate service with its own privacy policy. This page does not send it any of your local storage data.</li>
+    <li>If you email me, I receive your email address and whatever you write, and I use it to reply to you.</li>
+   </ul>
+   <h3>Optional account</h3>
+   <p>If you create an account, this is what’s stored and why:</p>
+   <ul>
+    <li><strong>Your email address and password</strong>, to sign you in. Passwords are stored only as a secure hash by the sign-in service; nobody can read them.</li>
+    <li><strong>A display name</strong>, if you enter one, and the date you signed up.</li>
+    <li><strong>Synced app data</strong>: the text records, settings and progress of apps you sign in to, so they match across your devices. Files such as photos, PDFs, audiobooks and attachments are never uploaded and stay on each device.</li>
+    <li>Your browser keeps a sign-in token in local storage for each site where you’re signed in (not a cookie). Signing out removes it.</li>
+   </ul>
+   <p>Two services handle this on my behalf. <strong>Supabase</strong> hosts the account database and sign-in (servers in the eastern United States; <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Supabase privacy policy</a>). <strong>Resend</strong> sends account emails such as sign-up confirmations and password resets from no-reply@mail.mcbflow.com (<a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Resend privacy policy</a>). Your data isn’t sold, shared for advertising, or used for anything other than running your account. Each account can read only its own data.</p>
+   <p>On the <a href="/account.html">Account</a> page you can export all your synced data as a file, delete one app’s synced data, change your email or password, or delete your account. Deleting your account permanently removes your login, profile and all synced data. Data saved inside each app on your own devices isn’t affected. Synced data is kept until you delete it or your account.</p>
+   <h3>Linked apps</h3>
+   <p>Listed tools (for example money.mcbflow.com) are separate websites, each on its own subdomain of mcbflow.com, with their own privacy information. This policy covers only this hub page.</p>
+   <h3>Changes</h3>
+   <p>If this page starts handling data differently, this policy will be updated and the date above changed.</p>
+   <h3>Children</h3>
+   <p>This hub is not directed at children. You must be 13 or older to create an account, and I don’t knowingly collect personal information from children under 13. If you believe a child has created an account, email me and I’ll delete it.</p>
+   <h3>Contact</h3>
+   <p>Questions: <a href="mailto:matthewbroyer@outlook.com">matthewbroyer@outlook.com</a></p>
+   <p>You can export or delete this hub’s local data using the footer controls, and your account data on the <a href="/account.html">Account</a> page.</p>
+  </div>
+  <div class="modalFoot">
+   <button class="btn" data-close="privacyModal" type="button">Close</button>
+  </div>
+ </div>
+</div>
+
+<!-- Terms Modal -->
+<div id="termsModal" class="modal" aria-hidden="true">
+ <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="modalHead">
+   <div><div id="termsTitle" class="modalTitle">Terms of use</div></div>
+   <button class="modalClose" data-close="termsModal" type="button" aria-label="Close">×</button>
+  </div>
+  <div class="modalBody legalBody">
+   <p><strong>Last updated:</strong> October 2026</p>
+   <p>This hub is a free directory of browser tools run by Matthew Broyer (“the operator”). By using it, you agree to these simple terms.</p>
+   <h3>Intended use</h3>
+   <p>Personal, lawful use. This is not a regulated professional service. Linked apps are separate sites and may post their own terms.</p>
+   <h3>Accounts</h3>
+   <p>Accounts are optional and free. You must be 13 or older to create one. Keep your password private; you’re responsible for activity on your account. Sync is a convenience, not a guaranteed backup: keep using each app’s export to save your own copies. The operator may suspend or delete accounts that misuse the service, and may end the account service with reasonable notice where practical. You can delete your account at any time on the Account page.</p>
+   <h3>No professional advice</h3>
+   <p>Nothing here is medical, legal, financial, tax, or investment advice. You are responsible for decisions you make.</p>
+   <h3>Availability</h3>
+   <p>The site and linked apps may change, break, or go offline without notice. Status indicators are best-effort reachability checks only.</p>
+   <h3>Prohibited misuse</h3>
+   <p>Do not attempt to disrupt the site, abuse contact channels, or use the tools for illegal activity.</p>
+   <h3>Intellectual property</h3>
+   <p>The site’s design, text, and icons belong to the operator unless otherwise noted. Any other companies’ names or trademarks belong to their owners, and this site is not affiliated with or endorsed by them.</p>
+   <h3>Limitation</h3>
+   <p>The software is provided “as is,” without warranties of any kind to the fullest extent permitted by law. The operator is not liable for losses arising from use or inability to use the tools, except where liability cannot be limited under applicable law.</p>
+   <h3>Governing law</h3>
+   <p>These terms are governed by the laws of the State of New Hampshire, USA, except where the law of your state requires otherwise.</p>
+   <h3>Changes</h3>
+   <p>These terms may be updated by revising this page. Continued use after changes means you accept the updated terms.</p>
+   <h3>Contact</h3>
+   <p><a href="mailto:matthewbroyer@outlook.com">matthewbroyer@outlook.com</a></p>
+  </div>
+  <div class="modalFoot">
+   <button class="btn" data-close="termsModal" type="button">Close</button>
+  </div>
+ </div>
+</div>
+
+<!-- Destructive Action Modal -->
+<div id="confirmModal" class="modal" aria-hidden="true">
+ <div class="modalCard narrow" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmDesc">
+  <div class="modalHead">
+   <div><div id="confirmTitle" class="modalTitle">Clear all hub data?</div></div>
+   <button class="modalClose" data-close="confirmModal" type="button" aria-label="Cancel">×</button>
+  </div>
+  <div class="modalBody">
+   <p id="confirmDesc">This permanently erases this site’s saved pins, launch statistics, theme preference, and storage-notice preference from this browser. It cannot be undone. Linked apps’ own data is not deleted by this action.</p>
+  </div>
+  <div class="modalFoot">
+   <button class="btn" data-close="confirmModal" type="button">Cancel</button>
+   <button id="confirmResetBtn" class="btn btnDanger" type="button">Delete data</button>
+  </div>
+ </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite">Copied</div>
+
+<div id="storageBanner" class="storage-banner" role="region" aria-label="Local storage notice">
+ <div>This site uses browser local storage for pins, local launch counts, and theme. No advertising or analytics scripts are included in this page.</div>
+ <button id="acceptStorage" class="btn btnPrimary sm" type="button">Got it</button>
+</div>
+
+<script>
+const APPS = [
+{id:"mbmoney",name:"Money",domain:"money.mcbflow.com",url:"https://money.mcbflow.com",category:"Finance",accent:"finance",icon:"$",install:true,tagline:"Track your net worth without the spreadsheet maze.",description:"See cash flow and savings goals in one simple dashboard. Manage personal wealth without complex accounting software.",features:["Wealth tracking","Cash flow","Savings goals","Account overview"]},
+{id:"mbwishlist",name:"Wishlist",domain:"wishlist.mcbflow.com",url:"https://wishlist.mcbflow.com",category:"Finance",accent:"finance",icon:"W",install:true,tagline:"Plan purchases before you spend.",description:"Keep planned purchases in one list, sorted by need vs. want, price, and need-by date. Check items out from a cart and see your spend totals in Purchased history.",features:["Need vs. want","Cart & checkout","Purchase history","JSON/CSV backup"]},
+{id:"mbmealprep",name:"Meal Prep",domain:"mealprep.mcbflow.com",url:"https://mealprep.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"＋",install:true,tagline:"Generate your weekly grocery list automatically.",description:"Scale recipes and hit nutrition targets without manual math. Plan meals quickly so you can get in and out of the kitchen.",features:["Recipe scaling","Grocery list","Nutrition targets","Weekly planning"]},
+{id:"mbactionplan",name:"Action Plan",domain:"actionplan.mcbflow.com",url:"https://actionplan.mcbflow.com",category:"Productivity",accent:"productivity",icon:"✓",install:true,tagline:"Get the right work done today.",description:"Focus on top priorities with a visual matrix and built-in timer. Task data is designed to stay on your machine in that app.",features:["Priority matrix","Focus timer","Projects","Local backup"]},
+{id:"mbauto",name:"Auto",domain:"auto.mcbflow.com",url:"https://auto.mcbflow.com",category:"Assets",accent:"assets",icon:"A",install:true,tagline:"Log maintenance and track fuel costs in one place.",description:"Keep service records, track cost of ownership, and know when maintenance is due.",features:["Service log","Fuel tracking","Repair history","Ownership costs"]},
+{id:"mbreading",name:"Reading",domain:"reading.mcbflow.com",url:"https://reading.mcbflow.com",category:"Knowledge",accent:"knowledge",icon:"B",install:true,tagline:"Turn books into usable knowledge.",description:"Track your reading queue and save takeaways next to the source material.",features:["Reading queue","Progress","Notes","Takeaways"]},
+{id:"mbgardening",name:"Garden",domain:"garden.mcbflow.com",url:"https://garden.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"✦",install:true,tagline:"Plan your planting schedule before the season gets complicated.",description:"Map garden beds and log harvests. Keep a record of what grew well for next year.",features:["Bed planning","Planting schedule","Crop tracking","Harvest log"]},
+{id:"mbfishing",name:"Fishing",domain:"fishing.mcbflow.com",url:"https://fishing.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"F",install:true,tagline:"Log a catch with one tap.",description:"Record each fish as you catch it, then look back through your catches on a map and in simple stats. No account needed; your catches are saved in your browser, not on a server.",features:["One-tap logging","Catch history","Map","Stats"]},
+{id:"mbnutrition",name:"Nutrition",domain:"nutrition.mcbflow.com",url:"https://nutrition.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"N",install:true,tagline:"Log calories, macros and water in a tap.",description:"Track calories, macros and hydration from about 7,800 foods, set personal targets, and log fasting and supplements. No account needed.",features:["Food log","Macro targets","Hydration","Fasting & supplements"]},
+{id:"mbnotes",name:"Notes",domain:"notes.mcbflow.com",url:"https://notes.mcbflow.com",category:"Productivity",accent:"productivity",icon:"N",install:true,tagline:"Quick notes and checklists that stay on your device.",description:"Write notes and checklists, pin, tag and link them, and import from Google Keep. Runs in your browser with no account.",features:["Notes & checklists","Tags & links","Google Keep import","Archive & trash"]},
+{id:"mbpayday",name:"Payday",domain:"payday.mcbflow.com",url:"https://payday.mcbflow.com",category:"Finance",accent:"finance",icon:"P",install:true,tagline:"Track your hours. Check your pay.",description:"Log shifts or clock in and out, estimate overtime and take-home pay, and compare it with your paystubs. Pay and tax figures are rough planning estimates.",features:["Time clock","Overtime by job","Take-home estimate","Paystub check"]},
+{id:"mbweather",name:"Weather",domain:"weather.mcbflow.com",url:"https://weather.mcbflow.com",category:"Utilities",accent:"utilities",icon:"W",install:true,tagline:"Check the forecast without the clutter.",description:"See your forecast, hourly outlook, radar and alerts in one fast browser app. Your settings stay on this device; weather services receive only the coordinates you look up.",features:["Forecast","Hourly","Radar","Alerts"]},
+];
+// Logos: each app's own favicon.svg, copied in (embedded so the hub never loads anything from the apps).
+const LOGOS = {
+ mbmoney: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbmo-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2b9172"/><stop offset=".55" stop-color="#087F5B"/><stop offset="1" stop-color="#066649"/></linearGradient><clipPath id="mbmo-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbmo-c1)"><rect width="64" height="64" fill="url(#mbmo-g1)"/><g transform="translate(0,2.3)"><rect x="16" y="36" width="7" height="13" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><rect x="28.5" y="30" width="7" height="19" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><rect x="41" y="33" width="7" height="16" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><path d="M 15,27 26,19 35,23.5 48,14" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="48" cy="14" r="3.5999999" fill="#ffffff"/></g></g></svg>`,
+ mbwishlist: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbwi-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#de8a29"/><stop offset=".55" stop-color="#D97706"/><stop offset="1" stop-color="#ae5f05"/></linearGradient><clipPath id="mbwi-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbwi-c1)"><rect width="64" height="64" fill="url(#mbwi-g1)"/><path d="M33 12h15a4 4 0 0 1 4 4v15a4 4 0 0 1-1.2 2.8L33.5 51.2a4 4 0 0 1-5.7 0L12.8 36.2a4 4 0 0 1 0-5.7L30.2 13.2A4 4 0 0 1 33 12z" fill="#fff"/> <circle cx="43.5" cy="20.5" r="3.2" fill="#D97706"/><path d="M30.5 41c-4.4-3-6.8-5.2-6.8-7.8a3.5 3.5 0 0 1 6.8-1.1 3.5 3.5 0 0 1 6.8 1.1c0 2.6-2.4 4.8-6.8 7.8z" fill="#9A4F05"/></g></svg>`,
+ mbmealprep: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbme-g19" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#e46a58"/><stop offset=".55" stop-color="#E0523D"/><stop offset="1" stop-color="#b34231"/></linearGradient><clipPath id="mbme-c19"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbme-c19)"><rect width="64" height="64" fill="url(#mbme-g19)"/><rect x="14.5" y="18.5" width="35" height="27" rx="4" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M 33,19 V 45 M 33,32 H 49" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect x="16.151796" y="19.755266" width="15.855019" height="24.410162" rx="1.8294252" fill="#ffffff" fill-opacity="0.55" style="stroke-width:1.19065"/></g></svg>`,
+ mbactionplan: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbac-g7" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#6860b2"/><stop offset=".55" stop-color="#4F46A5"/><stop offset="1" stop-color="#3f3884"/></linearGradient><clipPath id="mbac-c7"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbac-c7)"><rect width="64" height="64" fill="url(#mbac-g7)"/><rect x="15.5" y="15.5" width="33" height="33" rx="5" stroke="#fff" stroke-opacity=".55" stroke-width="4.5" fill="none"/><path d="m 23,32.000052 6.5,6.5 11.5,-13" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>`,
+ mbauto: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#44809f"/><stop offset=".55" stop-color="#256B8F"/><stop offset="1" stop-color="#1e5672"/></linearGradient><clipPath id="c"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#c)"><rect width="64" height="64" fill="url(#g)"/><path d="m 16.5,43.990999 a 17,17 0 1 1 31,0" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="m 32,37.990999 10,-11" fill="none" stroke="#F2B640" stroke-width="5.5" stroke-linecap="round"/><circle cx="32" cy="37.990997" r="5" fill="#fff"/></g></svg>`,
+ mbreading: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbre-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#9a5e8c"/><stop offset=".55" stop-color="#8A4479"/><stop offset="1" stop-color="#6e3661"/></linearGradient><clipPath id="mbre-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbre-c1)"><rect width="64" height="64" fill="url(#mbre-g1)"/><path d="M31 22.5C26 19 18.5 18 11.5 19.3v23.5c7-1.3 14.5-.3 19.5 3.2z" fill="#fff"/><path d="M33 22.5c5-3.5 12.5-4.5 19.5-3.2v23.5c-7-1.3-14.5-.3-19.5 3.2z" fill="#fff"/> <path d="M40 19.4V31.5l3.2-2.4 3.2 2.4V19" fill="#F2B640"/></g></svg>`,
+ mbgardening: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbga-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#4f9051"/><stop offset=".55" stop-color="#2F7D32"/><stop offset="1" stop-color="#266428"/></linearGradient><clipPath id="mbga-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbga-c1)"><rect width="64" height="64" fill="url(#mbga-g1)"/><rect x="12" y="34" width="40" height="7" rx="3" fill="#fff" fill-opacity=".55"/><rect x="12" y="44" width="40" height="7" rx="3" fill="#fff" fill-opacity=".55"/><path d="M32 34V23" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M32 25c-.8-6.5-5.5-10-12-10 0 6.5 5 10 12 10z" fill="#fff"/><path d="M32 23c.8-6.5 5.5-10 12-10 0 6.5-5 10-12 10z" fill="#F2B640"/></g></svg>`,
+ mbfishing: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbfi-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2d809a"/><stop offset=".55" stop-color="#0B6B8A"/><stop offset="1" stop-color="#09566e"/></linearGradient><clipPath id="mbfi-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbfi-c1)"><rect width="64" height="64" fill="url(#mbfi-g1)"/><path d="M13 51C24 36 36 22 50 13" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><circle cx="20" cy="43" r="4.6" fill="#fff"/><circle cx="20" cy="43" r="1.6" fill="#0B6B8A"/> <path d="M50 13v23" stroke="#fff" stroke-opacity=".8" stroke-width="2.4"/><path d="M50 38v5.5a4 4 0 0 1-8 0" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="50" cy="35" rx="3.2" ry="4.2" fill="#F2B640"/></g></svg>`,
+ mbnutrition: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbnu-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#7bb02f"/><stop offset=".55" stop-color="#65A30D"/><stop offset="1" stop-color="#51820a"/></linearGradient><clipPath id="mbnu-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbnu-c1)"><rect width="64" height="64" fill="url(#mbnu-g1)"/><path d="M32 15 C37 15 39.5 19 40.5 23.5 C41.5 28 45 31 45 37 A13 13 0 0 1 19 37 C19 31 22.5 28 23.5 23.5 C24.5 19 27 15 32 15Z" fill="#fff" fill-opacity=".3" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="37" r="6.5" fill="#F6C860"/></g></svg>`,
+ mbweather: `<svg viewBox="0 0 64 64" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbwe-g25" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2595cf"/><stop offset=".55" stop-color="#0284C7"/><stop offset="1" stop-color="#026a9f"/></linearGradient><clipPath id="mbwe-c25"><rect width="64" height="64" rx="18"/></clipPath><linearGradient xlink:href="#mbwe-g25" id="mbwe-linearGradient5" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"/></defs><g clip-path="url(#mbwe-c25)"><rect width="64" height="64" fill="url(#mbwe-g25)"/><g transform="translate(-0.66503232,1.1221731)"><circle cx="41" cy="22.5" r="10" fill="#ffffff" fill-opacity="0.55"/><path d="M 21.5,47 H 43 A 8.005623,8.005623 0 0 0 43.6,31 11,11 0 0 0 22.4,28.8 9.2,9.2 0 0 0 21.5,47 Z" fill="url(#mbwe-g25)" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" style="fill:url(#mbwe-linearGradient5)"/></g></g></svg>`,
+ mbnotes: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="nfav-g" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#edbe2b"/><stop offset=".55" stop-color="#EAB308"/><stop offset="1" stop-color="#bb8f06"/></linearGradient><clipPath id="nfav-c"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#nfav-c)"><rect width="64" height="64" fill="url(#nfav-g)"/><path d="M24 26.5h16M24 33.5h16M24 40.5h9" stroke="#fff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M17.5 14.5h21.5l7.5 7.5v27.5h-29z" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M39 14.5v7.5h7.5" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>`,
+ mbpayday: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="pdg" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#C73874"/><stop offset=".55" stop-color="#BE185D"/><stop offset="1" stop-color="#98134A"/></linearGradient><clipPath id="pdc"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#pdc)"><rect width="64" height="64" fill="url(#pdg)"/><g transform="translate(3.2 3.6) scale(.9)"><rect x="29.75" y="13" width="4.5" height="6.5" fill="#fff"/><rect x="25.5" y="8.5" width="13" height="6.5" rx="3" fill="#F2B640"/><rect x="42.13" y="19.57" width="5.2" height="8.4" rx="2" fill="#fff" transform="rotate(45 44.73 23.77)"/><circle cx="32" cy="36.5" r="18" fill="#fff"/><path d="M32 25.6v3.2M32 44.6v3.2" stroke="#A8154F" stroke-width="3.4" stroke-linecap="round"/><path d="M37.2 31.4C36.2 29.7 34.3 28.8 32 28.8 29.2 28.8 27.1 30.3 27.1 32.5 27.1 37.4 37.1 35.2 37.1 40.4 37.1 42.7 34.9 44.4 32 44.4 29.5 44.4 27.6 43.4 26.7 41.6" fill="none" stroke="#A8154F" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg>`,
+};
+// Install buttons open the app with ?install; the app shows its own install prompt (mb-install.js v3.1).
+// To add one for a new app: give its APPS entry install:true (the app must ship mb-install.js v3.1 or later).
+function installUrl(a) { return a.url.replace(/\/$/, "") + "/?install"; }
+function appIcon(a) {
+ const svg = LOGOS[a.id];
+ return svg
+  ? `<div class="icon logo" aria-hidden="true"><img src="data:image/svg+xml,${encodeURIComponent(svg)}" alt="" width="38" height="38"></div>`
+  : `<div class="icon accent-${a.accent}" aria-hidden="true">${esc(a.icon)}</div>`;
+}
+const CATS = ["All", "Finance", "Lifestyle", "Productivity", "Assets", "Knowledge", "Utilities"];
+const STATUS = Object.fromEntries(APPS.map(a => [a.id, {state:"unknown"}]));
+const STATS_KEY = "hub.launches", PIN_KEY = "hub.pins", THEME_KEY = "hub.theme", NOTICE_KEY = "hub.notice";
+
+// Validate anything read back from storage so a corrupted or hand-edited value can't break the page.
+const APP_IDS = APPS.map(a => a.id);
+function cleanPins(v) { return Array.isArray(v) ? v.filter(id => APP_IDS.includes(id)) : []; }
+function cleanLaunches(v) {
+ const out = {};
+ if (v && typeof v === "object" && !Array.isArray(v)) APP_IDS.forEach(id => { const n = Number(v[id]); if (Number.isFinite(n) && n > 0) out[id] = Math.floor(n); });
+ return out;
+}
+let state = {
+ search: "",
+ category: "All",
+ launches: cleanLaunches(load(STATS_KEY, {})),
+ pins: cleanPins(load(PIN_KEY, [])),
+ theme: load(THEME_KEY, "light") === "dark" ? "dark" : "light"
+};
+
+let lastFocus = null;
+
+function load(k, f) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch(_) { return f; } }
+function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(_) {} }
+function esc(v) { return String(v).replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[s])); }
+
+function applyTheme(theme) {
+ document.documentElement.setAttribute("data-theme", theme);
+ const btn = document.getElementById("themeToggle");
+ btn.setAttribute("aria-checked", theme === "dark" ? "true" : "false");
+ const meta = document.querySelector('meta[name="theme-color"]');
+ if (meta) meta.setAttribute("content", theme === "dark" ? "#1e2126" : "#ffffff");
+ btn.setAttribute("aria-label", "Dark mode");
+}
+// Account button: reads the sign-in token supabase-js saves on this site (set by account.html); this page loads no account code.
+(function accountButton() {
+ let signedIn = false, email = "";
+ try {
+  const t = JSON.parse(localStorage.getItem("sb-rxvcjdwmvxhwbdwncfhj-auth-token") || "null");
+  if (t && t.refresh_token && t.user) { signedIn = true; email = t.user.email || ""; }
+ } catch (_) {}
+ document.getElementById("acctLbl").textContent = signedIn ? "Account" : "Sign in";
+ document.getElementById("acctDot").className = "statusDot " + (signedIn ? "green" : "dim");
+ document.getElementById("accountBtn").title = signedIn ? "Signed in as " + email : "Optional account for syncing app data";
+})();
+document.getElementById("themeToggle").addEventListener("click", () => {
+ state.theme = state.theme === "light" ? "dark" : "light";
+ applyTheme(state.theme);
+ save(THEME_KEY, state.theme);
+});
+
+function renderFilters() {
+ const wrap = document.getElementById("filters");
+ wrap.innerHTML = CATS.map(c => `<button class="filter ${state.category===c?"active":""}" type="button" data-category="${esc(c)}" aria-pressed="${state.category===c}">${esc(c)} <span class="n">(${c==="All"?APPS.length:APPS.filter(a=>a.category===c).length})</span></button>`).join("");
+ wrap.querySelectorAll("[data-category]").forEach(b => b.addEventListener("click", () => { state.category = b.dataset.category; renderFilters(); renderApps(); }));
+}
+
+function filteredApps() {
+ const q = state.search.trim().toLowerCase();
+ return APPS.filter(a => (state.category === "All" || a.category === state.category) && (!q || [a.name, a.domain, a.category, a.tagline, a.description, ...a.features].join(" ").toLowerCase().includes(q))).sort((a,b) => {
+   const ap = state.pins.includes(a.id)?1:0, bp = state.pins.includes(b.id)?1:0; return bp - ap || a.name.localeCompare(b.name, "en", {sensitivity:"base"});
+ });
+}
+
+function statusLabel(app) {
+  const s = STATUS[app.id].state;
+  return s === "live" ? "REACHABLE" : s === "offline" ? "UNREACHABLE" : s === "checking" ? "CHECKING" : "NOT CHECKED";
+}
+
+function renderApps() {
+ const grid = document.getElementById("toolsGrid"), empty = document.getElementById("emptyState"), apps = filteredApps();
+ document.getElementById("resultMeta").textContent = `${apps.length} ${apps.length === 1 ? "tool" : "tools"} · ${APPS.length} total`;
+ empty.hidden = apps.length !== 0;
+
+ grid.innerHTML = apps.map((a, i) => {
+  const s = STATUS[a.id], p = state.pins.includes(a.id);
+  return `
+ <article class="card" style="animation-delay: ${i * 0.05}s">
+  <div class="cardTop">
+   ${appIcon(a)}
+   <div class="cardHead">
+    <h3>${esc(a.name)}</h3>
+    <div class="tagline">${esc(a.tagline)}</div>
+   </div>
+   <button class="pin ${p?"active":""}" data-pin="${a.id}" type="button" aria-pressed="${p}" aria-label="${p?"Unpin":"Pin"} ${esc(a.name)}" title="${p?"Unpin":"Pin to top"}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></button>
+  </div>
+  <div class="cardFooter">
+   <div class="cardMeta" title="${statusLabel(a)}">
+    <span class="liveDot ${s.state}" aria-hidden="true"></span>
+    <span class="domain">${esc(a.domain)}</span>
+    ${s.state === "offline" ? `<span class="liveNote bad">Unreachable</span>` : s.state === "checking" ? `<span class="liveNote">Checking…</span>` : `<span class="vh">${statusLabel(a)}</span>`}
+   </div>
+   <div class="footerActions">
+    <button class="btn details" data-details="${a.id}" type="button" aria-label="Details for ${esc(a.name)}" title="Details"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.01"/></svg></button>
+    ${a.install ? `<a class="btn install" href="${esc(installUrl(a))}" target="_blank" rel="noopener" aria-label="Install ${esc(a.name)} (opens in a new tab)" title="Opens ${esc(a.domain)} in a new tab with its install prompt">Install</a>` : ""}
+    <a class="btn launch" data-launch="${a.id}" href="${esc(a.url)}" aria-label="Open ${esc(a.name)}">Open</a>
+   </div>
+  </div>
+ </article>`;
+ }).join("");
+
+ grid.querySelectorAll("[data-pin]").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); const id = b.dataset.pin; state.pins = state.pins.includes(id) ? state.pins.filter(x => x !== id) : [...state.pins, id]; save(PIN_KEY, state.pins); renderApps(); }));
+ grid.querySelectorAll("[data-details]").forEach(b => b.addEventListener("click", () => openModal('modal', b.dataset.details)));
+ grid.querySelectorAll("[data-launch]").forEach(a => a.addEventListener("click", () => { const id = a.dataset.launch; state.launches[id] = (state.launches[id] || 0) + 1; save(STATS_KEY, state.launches); }));
+}
+
+async function checkApp(app) {
+ STATUS[app.id].state = "checking"; renderApps();
+ const c = new AbortController(), t = setTimeout(() => c.abort(), 7000);
+ try {
+  await fetch(app.url + (app.url.includes("?")?"&":"?") + "_mb_status=" + Date.now(), {method:"GET", mode:"no-cors", cache:"no-store", credentials:"omit", referrerPolicy:"no-referrer", signal:c.signal});
+  STATUS[app.id].state = "live";
+ } catch(e) { STATUS[app.id].state = "offline"; } finally { clearTimeout(t); }
+ renderApps();
+}
+
+async function checkAll() {
+ if (checkAll.running) return; // ignore repeat clicks while a check is in progress
+ checkAll.running = true;
+ document.getElementById("systemStatus").textContent = "Checking…"; document.getElementById("systemStatus").className = "statusValue orange";
+ document.getElementById("navStatusDot").className = "statusDot dim"; document.getElementById("navStatusText").textContent = "Checking";
+ APPS.forEach(a => STATUS[a.id].state = "checking"); renderApps();
+ await Promise.all(APPS.map(checkApp));
+ const live = APPS.filter(a => STATUS[a.id].state === "live").length, off = APPS.filter(a => STATUS[a.id].state === "offline").length;
+ document.getElementById("onlineCount").textContent = live; document.getElementById("offlineCount").textContent = off;
+ document.getElementById("systemStatus").textContent = off === 0 ? "All reachable" : `${live}/${APPS.length} reachable`;
+ document.getElementById("systemStatus").className = `statusValue ${off === 0 ? "green" : "orange"}`;
+ document.getElementById("navStatusDot").className = `statusDot ${off === 0 ? "green" : "dim"}`; document.getElementById("navStatusText").textContent = `${live}/${APPS.length} reachable`;
+ checkAll.running = false;
+}
+
+function getFocusable(container) {
+  return [...container.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])')]
+    .filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+}
+
+function openModal(modalId, appId = null) {
+ const m = document.getElementById(modalId);
+ lastFocus = document.activeElement;
+ if (appId && modalId === 'modal') {
+  const a = APPS.find(x => x.id === appId); if(!a) return;
+  document.getElementById("modalCat").className = `cat accent-${a.accent}`; document.getElementById("modalCat").textContent = a.category;
+  document.getElementById("modalTitle").textContent = a.name; document.getElementById("modalDomain").textContent = a.domain; document.getElementById("modalDesc").textContent = a.description;
+  document.getElementById("modalFeatures").innerHTML = a.features.map(f => `<div class="modalItem">${esc(f)}</div>`).join("");
+  document.getElementById("modalStatus").textContent = statusLabel(a);
+  document.getElementById("modalLaunches").textContent = state.launches[a.id] || 0;
+  const launch = document.getElementById("modalLaunch"); launch.href = a.url;
+  const inst = document.getElementById("modalInstall"); inst.hidden = !a.install; if (a.install) inst.href = installUrl(a);
+  launch.onclick = () => { state.launches[a.id] = (state.launches[a.id] || 0) + 1; save(STATS_KEY, state.launches); };
+  document.getElementById("modalCopy").onclick = () => { copyText(a.url); showToast("URL copied"); };
+ }
+ m.classList.add("open"); m.setAttribute("aria-hidden", "false");
+ const card = m.querySelector(".modalCard");
+ const focusables = getFocusable(card);
+ if (focusables.length) focusables[0].focus();
+ m._trap = function(e) {
+   if (e.key !== "Tab" || !m.classList.contains("open")) return;
+   const list = getFocusable(card);
+   if (!list.length) return;
+   const first = list[0], last = list[list.length - 1];
+   if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+   else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+ };
+ document.addEventListener("keydown", m._trap);
+}
+
+function closeModal(modalId) {
+ const m = document.getElementById(modalId);
+ m.classList.remove("open"); m.setAttribute("aria-hidden", "true");
+ if (m._trap) document.removeEventListener("keydown", m._trap);
+ if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+}
+
+async function copyText(v) {
+  try { if (navigator.clipboard) await navigator.clipboard.writeText(v); else throw 0; }
+  catch(_) {
+    const t = document.createElement("textarea");
+    t.value = v; t.setAttribute("readonly", ""); t.style.position = "fixed"; t.style.left = "-9999px";
+    document.body.appendChild(t); t.select();
+    try { document.execCommand("copy"); } catch(_) {}
+    t.remove();
+  }
+}
+let toastTimer; function showToast(m) { const t = document.getElementById("toast"); t.textContent = m; t.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 1800); }
+
+function exportHubData() {
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    site: "mcbflow.com hub",
+    theme: state.theme,
+    pins: state.pins,
+    launches: state.launches
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "mcbflow-hub-data.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000); // revoking immediately can cancel the download in some browsers
+  showToast("Exported");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+ applyTheme(state.theme);
+ renderFilters(); renderApps();
+
+ document.getElementById("searchInput").addEventListener("input", e => {
+  state.search = e.target.value;
+  renderApps();
+  const q = state.search.trim().toLowerCase();
+  document.querySelectorAll(".faq-item").forEach(item => {
+    const text = item.textContent.toLowerCase();
+    item.style.display = (!q || text.includes(q)) ? "block" : "none";
+  });
+ });
+
+ document.getElementById("refreshStatus").addEventListener("click", checkAll);
+
+ document.querySelectorAll("[data-close]").forEach(btn => {
+   btn.addEventListener("click", () => closeModal(btn.dataset.close));
+ });
+ document.querySelectorAll(".modal").forEach(m => {
+  m.addEventListener("click", e => { if (e.target.classList.contains('modal')) closeModal(m.id); });
+ });
+ document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".modal.open").forEach(m => closeModal(m.id)); });
+
+ const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+ const mainNav = document.getElementById("mainNav");
+ mobileMenuBtn.addEventListener("click", () => {
+  const expanded = mobileMenuBtn.getAttribute("aria-expanded") === "true";
+  mobileMenuBtn.setAttribute("aria-expanded", String(!expanded));
+  mainNav.classList.toggle("open");
+ });
+ mainNav.querySelectorAll("a").forEach(link => {
+   link.addEventListener("click", () => {
+     mainNav.classList.remove("open");
+     mobileMenuBtn.setAttribute("aria-expanded", "false");
+   });
+ });
+
+ const progressBar = document.getElementById("scrollProgress");
+ const topBtn = document.getElementById("scrollTopBtn");
+ window.addEventListener('scroll', () => {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+  progressBar.style.width = scrolled + "%";
+  if (winScroll > 300) topBtn.classList.add('visible');
+  else topBtn.classList.remove('visible');
+  updateActiveNav();
+ });
+ // highlight the nav link for the section currently in view
+ const navLinks = [...mainNav.querySelectorAll('a[href^="#"]')];
+ function updateActiveNav() {
+  const offset = 120;
+  let current = null;
+  navLinks.forEach(link => {
+   const target = document.querySelector(link.getAttribute("href"));
+   const sec = target && (target.closest("section") || target);
+   if (sec && sec.getBoundingClientRect().top - offset <= 0) current = link;
+  });
+  if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 4) current = navLinks[navLinks.length - 1];
+  navLinks.forEach(l => l === current ? l.setAttribute("aria-current", "true") : l.removeAttribute("aria-current"));
+ }
+ updateActiveNav();
+ topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+ document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+   const content = this.nextElementSibling;
+   const isExpanded = this.getAttribute('aria-expanded') === 'true';
+   this.setAttribute('aria-expanded', String(!isExpanded));
+   content.setAttribute('aria-hidden', String(isExpanded));
+   if (!isExpanded) content.style.maxHeight = content.scrollHeight + "px";
+   else content.style.maxHeight = "0px";
+  });
+ });
+
+ if (!load(NOTICE_KEY, false)) {
+  setTimeout(() => document.getElementById("storageBanner").classList.add("show"), 500);
+ }
+ document.getElementById("acceptStorage").addEventListener("click", () => {
+  save(NOTICE_KEY, true);
+  document.getElementById("storageBanner").classList.remove("show");
+ });
+
+
+ document.getElementById("openPrivacy").addEventListener("click", () => openModal("privacyModal"));
+ document.getElementById("openTerms").addEventListener("click", () => openModal("termsModal"));
+ document.getElementById("exportDataBtn").addEventListener("click", exportHubData);
+ document.getElementById("triggerResetBtn").addEventListener("click", () => openModal("confirmModal"));
+ document.getElementById("confirmResetBtn").addEventListener("click", () => {
+  try {
+   [STATS_KEY, PIN_KEY, THEME_KEY, NOTICE_KEY].forEach(k => localStorage.removeItem(k));
+  } catch(_) {
+   closeModal("confirmModal");
+   showToast("Couldn’t reach browser storage. Clear this site’s data in your browser settings.");
+   return;
+  }
+  window.location.reload();
+ });
+
+ // Shareable links: mcbflow.com/#privacy and /#terms open those notices directly.
+ function openFromHash() {
+  const h = location.hash.slice(1);
+  if (h === "privacy") openModal("privacyModal");
+  else if (h === "terms") openModal("termsModal");
+ }
+ openFromHash();
+ window.addEventListener("hashchange", openFromHash);
+
+ // Status checks contact the linked sites, so they run only when the visitor presses "Check status".
+});
+</script>
+</body>
+</html>
