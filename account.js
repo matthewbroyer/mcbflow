@@ -8,6 +8,8 @@ const SUPABASE_URL = 'https://rxvcjdwmvxhwbdwncfhj.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_i786YYip9yEZ_KC0CwOcZw_q7yOIoyM';
 const RETURN_URL   = 'https://mcbflow.com/account.html';
 const THEME_KEY    = 'hub.theme';
+const SESSION_KEY  = 'sb-rxvcjdwmvxhwbdwncfhj-auth-token';   // where supabase-js keeps the sign-in (same key as mb-sync.js)
+const KEEP_KEY     = 'hub.keepSignedIn';                     // '0' = sign-in lasts until the browser closes; anything else = kept
 const MIN_PASSWORD = 8;
 const APP_NAMES = {
   hub: 'Hub', money: 'Money', garden: 'Garden', notes: 'Notes', reading: 'Reading', payday: 'Payday',
@@ -64,9 +66,46 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') $$('.modal.o
 if (!window.supabase || !window.supabase.createClient) {
   show('error'); $('#errorText').textContent = 'The account tools didn’t load. Reload the page to try again.'; return;
 }
+/* "Keep me signed in on this device" — same storage behaviour as mb-sync.js 1.1: the sign-in token lives in localStorage
+   when kept, in sessionStorage (gone when the browser closes) when not. */
+function lsGet(k) { try { return localStorage.getItem(k); } catch (_) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (_) {} }
+function lsDel(k) { try { localStorage.removeItem(k); } catch (_) {} }
+function ssGet(k) { try { return sessionStorage.getItem(k); } catch (_) { return null; } }
+function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (_) {} }
+function ssDel(k) { try { sessionStorage.removeItem(k); } catch (_) {} }
+function keepSignedIn() { return lsGet(KEEP_KEY) !== '0'; }
+function setKeepSignedIn(on) {
+  const raw = lsGet(SESSION_KEY) || ssGet(SESSION_KEY);
+  if (on) { lsDel(KEEP_KEY); if (raw) { lsSet(SESSION_KEY, raw); ssDel(SESSION_KEY); } }
+  else { lsSet(KEEP_KEY, '0'); if (raw) { ssSet(SESSION_KEY, raw); lsDel(SESSION_KEY); } }
+}
+const authStore = {
+  getItem(k) { return keepSignedIn() ? lsGet(k) : (ssGet(k) || null); },
+  setItem(k, v) { if (keepSignedIn()) { lsSet(k, v); ssDel(k); } else { ssSet(k, v); lsDel(k); } },
+  removeItem(k) { lsDel(k); ssDel(k); }
+};
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit' }
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit', storage: authStore, storageKey: SESSION_KEY }
 });
+
+/* ---------- profile pictures (mb-avatars.js: the same 28 pictures as mb-sync.js) ---------- */
+const AVS = window.MBAvatars || null;
+function avatarHTML(id, text) { return AVS ? AVS.svg(id, AVS.initialOf(text)) : esc(((String(text || '?').trim()[0]) || '?').toUpperCase()); }
+function paintAvatar(el, id, text) {
+  if (!el) return;
+  el.innerHTML = avatarHTML(id, text);
+  el.classList.toggle('pic', !!(AVS && AVS.ids.includes(id)));
+}
+function renderPics(box, selected, text, name) {
+  if (!box || !AVS) { if (box) box.hidden = true; return; }
+  const legend = box.querySelector('legend');
+  box.innerHTML = '';
+  if (legend) box.appendChild(legend);
+  box.insertAdjacentHTML('beforeend', [''].concat(AVS.ids).map(id =>
+    `<label class="pic${id ? '' : ' ini'}" title="${esc(AVS.label(id))}"><input type="radio" name="${name}" value="${id}" ${(selected || '') === id ? 'checked' : ''} aria-label="${esc(AVS.label(id))}">${AVS.svg(id, AVS.initialOf(text))}</label>`).join(''));
+}
+function pickedPic(form, name) { const r = form.querySelector(`input[name="${name}"]:checked`); return r ? r.value : ''; }
 
 let user = null;
 let recovering = /type=recovery/.test(location.hash);
@@ -95,6 +134,19 @@ sb.auth.onAuthStateChange((event, session) => {
   }
 })();
 
+renderPics($('#signupPics'), '', '', 'signupPic');
+// the "Your initial" tile follows what's typed (screen name, else email), like the profile form
+$('#signupForm').addEventListener('input', e => {
+  if (!AVS || !/^(name|email)$/.test(e.target.name)) return;
+  const f = e.currentTarget, l = $('#signupPics .pic.ini .mbs-av-l');
+  if (l) l.textContent = AVS.initialOf(f.elements.name.value.trim() || f.elements.email.value.trim());
+});
+$('#nameForm').addEventListener('input', e => {
+  if (!AVS || !user || e.target.name !== 'name') return;
+  const l = $('#profilePics .pic.ini .mbs-av-l');
+  if (l) l.textContent = AVS.initialOf(e.target.value.trim() || user.email);
+});
+
 /* ---------- tabs and links between views ---------- */
 $$('[data-go]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); show(a.dataset.go); }));
 
@@ -103,12 +155,14 @@ $('#signinForm').addEventListener('submit', e => {
   e.preventDefault();
   const f = e.currentTarget, out = $('#signinMsg'); msg(out, '');
   $('#resendBox').hidden = true;
+  if (f.keep.checked) lsDel(KEEP_KEY); else lsSet(KEEP_KEY, '0');   // where the token is saved (see authStore)
   busy($('button[type=submit]', f), async () => {
     const { error } = await sb.auth.signInWithPassword({ email: f.email.value.trim(), password: f.password.value });
     if (error) { msg(out, friendly(error)); if (/not confirmed/i.test(error.message)) $('#resendBox').hidden = false; return; }
-    f.reset();
+    f.reset(); f.keep.checked = keepSignedIn();
   });
 });
+$('#signinForm').keep.checked = keepSignedIn();
 $('#resendBtn').addEventListener('click', e => {
   const email = $('#signinForm').email.value.trim(), out = $('#signinMsg');
   if (!email) { msg(out, 'Enter your email above first.'); return; }
@@ -128,10 +182,10 @@ $('#signupForm').addEventListener('submit', e => {
     const email = f.email.value.trim();
     const { data, error } = await sb.auth.signUp({
       email, password: f.password.value,
-      options: { emailRedirectTo: RETURN_URL, data: { display_name: f.name.value.trim() } }
+      options: { emailRedirectTo: RETURN_URL, data: { display_name: f.elements.name.value.trim().slice(0, 60), avatar: pickedPic(f, 'signupPic') } }
     });
     if (error) { msg(out, friendly(error)); return; }
-    f.reset();
+    f.reset(); renderPics($('#signupPics'), '', '', 'signupPic');
     if (data.session) return;                    // email confirmation turned off: already signed in
     $('#checkEmailAddr').textContent = email;
     show('checkEmail');
@@ -174,19 +228,45 @@ async function loadAccount() {
   const pending = user.new_email;
   $('#pendingEmail').hidden = !pending;
   if (pending) $('#pendingEmailAddr').textContent = pending;
+  $('#keepToggle').checked = keepSignedIn();
+  const md = user.user_metadata || {};
+  let name = md.display_name || '';
   const { data } = await sb.from('profiles').select('display_name').eq('id', user.id).maybeSingle();
-  $('#nameForm').name.value = (data && data.display_name) || '';
+  if (data && data.display_name != null) name = data.display_name || name;
+  profile = { name, avatar: md.avatar || '' };
+  $('#nameForm').elements.name.value = name;
+  renderPics($('#profilePics'), profile.avatar, name || user.email, 'pic');
+  paintProfile();
   loadSummary();
 }
+let profile = { name: '', avatar: '' };
+// header chip (saved profile) and the live preview in the Profile form (what Save would store)
+function paintProfile() {
+  if (!user) return;
+  paintAvatar($('#acctAv'), profile.avatar, profile.name || user.email);
+  $('#acctName').hidden = !profile.name; $('#acctName').textContent = profile.name;
+  const f = $('#nameForm'), name = f.elements.name.value.trim(), pic = pickedPic(f, 'pic');
+  paintAvatar($('#profAv'), pic, name || user.email);
+  $('#profGreet').textContent = AVS ? AVS.greeting(name) : (name || user.email);
+  $('#profSub').textContent = (AVS ? AVS.label(pic) + ' · ' : '') + (user.email || '');
+}
+$('#nameForm').addEventListener('input', paintProfile);
+$('#nameForm').addEventListener('change', paintProfile);
+$('#keepToggle').addEventListener('change', e => { setKeepSignedIn(e.currentTarget.checked); toast(e.currentTarget.checked ? 'You’ll stay signed in on this device' : 'You’ll be signed out when the browser closes'); });
 
 $('#nameForm').addEventListener('submit', e => {
   e.preventDefault();
   const f = e.currentTarget, out = $('#nameMsg'); msg(out, '');
   busy($('button[type=submit]', f), async () => {
-    const name = f.name.value.trim().slice(0, 60) || null;
-    const { error } = await sb.from('profiles').update({ display_name: name }).eq('id', user.id);
+    // Same two writes as mb-sync.js saveProfile(): the account's user_metadata (what every app reads) and profiles.display_name.
+    const name = f.elements.name.value.trim().slice(0, 60), avatar = pickedPic(f, 'pic');
+    const { data, error } = await sb.auth.updateUser({ data: { display_name: name, avatar } });
     if (error) { msg(out, friendly(error)); return; }
-    toast('Display name saved');
+    if (data && data.user) user = data.user;
+    const r = await sb.from('profiles').update({ display_name: name || null }).eq('id', user.id);
+    if (r.error) { msg(out, friendly(r.error)); return; }
+    profile = { name, avatar }; paintProfile();
+    toast('Profile saved');
   });
 });
 

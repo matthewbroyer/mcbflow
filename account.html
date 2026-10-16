@@ -16,6 +16,7 @@
 <script src="/account-boot.js"></script>
 <link rel="stylesheet" href="/hub.css">
 <link rel="stylesheet" href="/account.css">
+<link rel="stylesheet" href="/mb-suite-topbar.css"><!-- shared MB Suite top bar v3.3.0, unchanged; keep it the last stylesheet -->
 </head>
 <body>
 <header class="topbar page-bar">
@@ -29,7 +30,7 @@
    </span>
   </a>
   <div class="headerActions actions">
-   <a class="btn sm" href="/">All apps</a>
+   <a class="tb" href="/" aria-label="All apps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg><span class="tb-lbl">All apps</span></a>
    <button id="themeToggle" class="themesw" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Dark mode"><span class="tk"><svg class="i-sun" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="10" r="3.2"/><path d="M10 2.5v1.8M10 15.7v1.8M2.5 10h1.8M15.7 10h1.8M4.7 4.7l1.3 1.3M14 14l1.3 1.3M4.7 15.3 6 14M14 6l1.3-1.3"/></svg><svg class="i-moon" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M16.5 12.2A6.6 6.6 0 0 1 7.8 3.5a6.6 6.6 0 1 0 8.7 8.7Z"/></svg><i class="th"></i></span></button>
   </div>
  </div>
@@ -51,6 +52,7 @@
   <form id="signinForm" novalidate>
    <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required maxlength="254"></label>
    <label class="field"><span>Password</span><input name="password" type="password" autocomplete="current-password" required></label>
+   <label class="check keep"><input name="keep" type="checkbox" checked> <span><b>Keep me signed in on this device</b><small>Turn off on a shared computer: you’ll be signed out when the browser closes.</small></span></label>
    <p id="signinMsg" class="formMsg" role="alert"></p>
    <div id="resendBox" class="inlineRow" hidden><button id="resendBtn" class="btn sm" type="button">Send confirmation email again</button></div>
    <div class="formActions"><button class="btn btnPrimary" type="submit">Sign in</button><a href="#" class="textLink" data-go="forgot">Forgot password?</a></div>
@@ -61,7 +63,11 @@
   <div class="tabs" role="tablist"><button class="tab" type="button" data-go="signin" aria-selected="false">Sign in</button><button class="tab on" type="button" aria-selected="true">Create account</button></div>
   <h2 id="signupH" class="vh">Create account</h2>
   <form id="signupForm" novalidate>
-   <label class="field"><span>Display name (optional)</span><input name="name" type="text" autocomplete="nickname" maxlength="60"></label>
+   <label class="field"><span>Screen name (optional)</span><input name="name" type="text" autocomplete="nickname" maxlength="60" placeholder="What should we call you?"></label>
+   <details class="picPick">
+    <summary>Choose a profile picture (optional)</summary>
+    <fieldset class="picGrid" id="signupPics"><legend class="vh">Profile picture</legend></fieldset>
+   </details>
    <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required maxlength="254"></label>
    <label class="field"><span>Password (8+ characters)</span><input name="password" type="password" autocomplete="new-password" required minlength="8"></label>
    <label class="check"><input name="age" type="checkbox"> <span>I’m 13 or older and agree to the <a href="/#terms">Terms</a> and <a href="/#privacy">Privacy policy</a>.</span></label>
@@ -104,10 +110,11 @@
  <div data-view="account" hidden>
   <section class="panel">
    <div class="acctHead">
-    <div><div class="eyebrow">Signed in</div><div class="acctEmail" id="acctEmail"></div><div class="muted small">Member since <span id="acctSince"></span></div></div>
+    <div class="acctWho"><span class="acctAv" id="acctAv" aria-hidden="true"></span><div><div class="eyebrow">Signed in</div><div class="acctName" id="acctName" hidden></div><div class="acctEmail" id="acctEmail"></div><div class="muted small">Member since <span id="acctSince"></span></div></div></div>
     <button id="signoutBtn" class="btn" type="button">Sign out</button>
    </div>
    <p id="pendingEmail" class="formMsg ok" hidden>Waiting for you to confirm the change to <b id="pendingEmailAddr"></b>.</p>
+   <label class="check keep acctKeep"><input id="keepToggle" type="checkbox"> <span><b>Keep me signed in on this device</b><small>Off: you’ll be signed out of this page when the browser closes.</small></span></label>
   </section>
 
   <section class="panel">
@@ -119,12 +126,15 @@
    <div class="formActions"><button id="exportBtn" class="btn" type="button">Export all synced data (JSON)</button></div>
   </section>
 
-  <section class="panel">
-   <h2>Profile</h2>
+  <section class="panel" aria-labelledby="profileH">
+   <h2 id="profileH">Profile</h2>
+   <p class="muted small">Shown in every mcbflow.com app you sign in to, so you can tell at a glance it’s your account.</p>
    <form id="nameForm" novalidate>
-    <label class="field"><span>Display name</span><input name="name" type="text" autocomplete="nickname" maxlength="60"></label>
+    <div class="profPrev" aria-live="polite"><span class="acctAv lg" id="profAv" aria-hidden="true"></span><div><b id="profGreet"></b><span class="muted small" id="profSub"></span></div></div>
+    <label class="field"><span>Screen name</span><input name="name" type="text" autocomplete="nickname" maxlength="60" placeholder="What should we call you?"></label>
+    <fieldset class="picGrid" id="profilePics"><legend>Profile picture</legend></fieldset>
     <p id="nameMsg" class="formMsg" role="alert"></p>
-    <div class="formActions"><button class="btn" type="submit">Save name</button></div>
+    <div class="formActions"><button class="btn btnPrimary" type="submit">Save profile</button></div>
    </form>
   </section>
 
@@ -154,7 +164,11 @@
   </section>
  </div>
 
- <p class="acctFoot muted small"><a href="/#privacy">Privacy</a> · <a href="/#terms">Terms</a> · Questions: <a href="mailto:matthewbroyer@outlook.com">matthewbroyer@outlook.com</a></p>
+ <footer class="mb-foot">
+  <p class="mb-foot-main"><b>mcbflow.com</b> v6.2.0 · Free · No account needed</p>
+  <nav class="mb-foot-links" aria-label="About mcbflow.com"><a href="/#privacy">Privacy</a><a href="/#terms">Terms</a><a href="/account.html" aria-current="page">Account</a><a href="mailto:matthewbroyer@outlook.com">Questions? Email me</a></nav>
+  <p class="mb-foot-copy">© 2026 Matthew Broyer</p>
+ </footer>
 </main>
 
 <div id="delAppModal" class="modal" aria-hidden="true">
@@ -180,6 +194,7 @@
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script src="/vendor/supabase.js"></script>
+<script src="/mb-avatars.js"></script>
 <script src="/account.js"></script>
 </body>
 </html>

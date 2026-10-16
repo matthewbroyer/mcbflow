@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="description" content="mcbflow.com: Practical browser tools for spreadsheet users. Free, local-first personal web apps.">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src https:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src https:; base-uri 'none'; form-action 'none'">
 <title>mcbflow.com: Personal Web Apps</title>
 <link rel="canonical" href="https://mcbflow.com/">
 <meta property="og:type" content="website">
@@ -27,6 +27,7 @@
 if (window.top !== window.self) { document.documentElement.style.display = "none"; try { window.top.location = window.self.location.href; } catch (_) {} }
 </script>
 <link rel="stylesheet" href="/hub.css">
+<link rel="stylesheet" href="/mb-suite-topbar.css"><!-- shared MB Suite top bar v3.3.0, unchanged; keep it the last stylesheet -->
 </head>
 <body>
 
@@ -53,9 +54,9 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
      <span id="navStatusText">Not checked</span>
     </span>
    </nav>
-   <a id="accountBtn" class="btn sm acctBtn" href="/account.html" title="Optional account for syncing app data"><span id="acctDot" class="statusDot dim" aria-hidden="true"></span><span id="acctLbl">Sign in</span></a>
    <button id="themeToggle" class="themesw" type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Dark mode"><span class="tk"><svg class="i-sun" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="10" r="3.2"/><path d="M10 2.5v1.8M10 15.7v1.8M2.5 10h1.8M15.7 10h1.8M4.7 4.7l1.3 1.3M14 14l1.3 1.3M4.7 15.3 6 14M14 6l1.3-1.3"/></svg><svg class="i-moon" viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M16.5 12.2A6.6 6.6 0 0 1 7.8 3.5a6.6 6.6 0 1 0 8.7 8.7Z"/></svg><i class="th"></i></span></button>
-   <button id="mobileMenuBtn" class="btn btn-icon menu-toggle tb" type="button" aria-expanded="false" aria-label="Toggle menu" aria-controls="mainNav"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+   <a id="accountBtn" class="tb tb-acct" href="/account.html" aria-label="Sign in to sync across devices" title="Sign in to sync across devices (optional)"><svg class="mbs-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span class="tb-lbl">Sign in</span></a>
+   <button id="mobileMenuBtn" class="menu-toggle tb" type="button" aria-expanded="false" aria-label="Toggle menu" aria-controls="mainNav"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   </div>
   <div id="scrollProgress" class="scroll-progress" role="presentation"></div>
  </div>
@@ -65,6 +66,7 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
  <section class="hero" aria-labelledby="heroTitle">
   <div class="heroGrid">
    <div class="heroMain">
+    <p class="mb-greet" id="greet"></p>
     <span class="kicker"><span class="kickerMark" aria-hidden="true"></span>For spreadsheet power users</span>
     <h1 id="heroTitle">Ditch complex spreadsheets for fast browser apps.</h1>
     <p class="heroCopy">You rely on spreadsheets to manage finances, meals, and tasks because standard software is bloated. These tools turn those kinds of systems into lightweight browser apps that load quickly and can keep data on your device.</p>
@@ -84,7 +86,13 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
  <section id="apps" class="section" aria-labelledby="apps-title">
   <div class="sectionHead">
    <h2 id="apps-title" class="sectionTitle">Applications</h2>
-   <div id="resultMeta" class="sectionMeta">10 tools</div>
+   <div class="sectionTools">
+    <div id="resultMeta" class="sectionMeta">12 tools</div>
+    <div class="mb-seg viewSeg" id="viewSeg" role="group" aria-label="Show applications as">
+     <button type="button" data-hubview="list" aria-pressed="true" title="Show apps as a list with details"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>List</button>
+     <button type="button" data-hubview="drawer" aria-pressed="false" title="Show apps as an app drawer: icons you tap to open"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg>Drawer</button>
+    </div>
+   </div>
   </div>
   <div class="controls">
    <label for="searchInput" class="searchWrap">
@@ -95,6 +103,7 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
    <div id="filters" class="filters" role="group" aria-label="Filter applications"></div>
   </div>
   <div id="toolsGrid" class="grid"></div>
+  <ul id="drawerGrid" class="drawer" aria-label="Applications" hidden></ul>
   <div id="emptyState" class="empty" hidden>
    <strong>No apps match that search.</strong>
    <span>Try a different term, or pick “All” to see every tool.</span>
@@ -145,7 +154,7 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
     <p>Accounts are optional. This page does not use advertising or analytics scripts.</p>
     <ul>
      <li>With an optional account, apps sync their text data. Photos, PDFs and other files stay on your device.</li>
-     <li>Pins, theme, and local launch counts save in your browser.</li>
+     <li>Pins, theme, list or drawer view, and local launch counts save in your browser.</li>
      <li>Linked tools are separate websites—check each for its own practices.</li>
     </ul>
    </div>
@@ -163,7 +172,7 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
    <div class="faq-item">
     <button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-ans-1">Where is my data stored on this hub?</button>
     <div class="faq-content" id="faq-ans-1" aria-hidden="true">
-     <p>On this hub page, preferences such as theme, pinned apps, and local launch counts are stored in your browser’s local storage for this site only. These hub preferences are never uploaded. If you create an optional account, apps you sign in to also save a copy of their data to your account so it can sync between devices; see <strong>Privacy</strong> for details. Linked apps (Money, Meal Prep, and so on) are separate sites—review each app you use.</p>
+     <p>On this hub page, preferences such as theme, pinned apps, list or app drawer view, and local launch counts are stored in your browser’s local storage for this site only. These hub preferences are never uploaded. If you create an optional account, apps you sign in to also save a copy of their data to your account so it can sync between devices; see <strong>Privacy</strong> for details. Linked apps (Money, Meal Prep, and so on) are separate sites—review each app you use.</p>
     </div>
    </div>
    <div class="faq-item">
@@ -193,7 +202,7 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
    <div class="faq-item">
     <button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-ans-4">How do I export or delete hub data?</button>
     <div class="faq-content" id="faq-ans-4" aria-hidden="true">
-     <p>Use Export Hub Data or Delete Local Data in the footer. Delete removes this site’s local storage keys for theme, pins, launch counts and the storage notice preference in this browser.</p>
+     <p>Use Export Hub Data or Delete Local Data in the footer. Delete removes this site’s local storage keys for theme, pins, launch counts, the list/app drawer choice and the storage notice preference in this browser. It doesn’t sign you out.</p>
     </div>
    </div>
   </div>
@@ -201,17 +210,18 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
 </main>
 
 <footer class="siteFooter">
- <div class="shell footerLine">
-  <div><b>mcbflow.com</b> © 2026</div>
-  <div class="footerNote">
-   <span>Independent project · free tools · <code>v6.1.0</code></span>
-   <span class="footerLinks">
-    <a class="flink" href="https://buymeacoffee.com/matthewbroyer" target="_blank" rel="noopener noreferrer">☕ Support this site</a>
+ <div class="shell">
+  <div class="mb-foot">
+   <p class="mb-foot-main"><b>mcbflow.com</b> v6.2.0 · Free · No account needed</p>
+   <nav class="mb-foot-links" aria-label="About mcbflow.com">
     <button type="button" id="openPrivacy">Privacy</button>
     <button type="button" id="openTerms">Terms</button>
+    <a href="/account.html">Account</a>
+    <a href="https://buymeacoffee.com/matthewbroyer" target="_blank" rel="noopener noreferrer">Support this site</a>
     <button type="button" id="exportDataBtn">Export Hub Data</button>
     <button type="button" id="triggerResetBtn">Delete Local Data</button>
-   </span>
+   </nav>
+   <p class="mb-foot-copy">© 2026 Matthew Broyer</p>
   </div>
  </div>
  <div class="floating-group">
@@ -261,6 +271,7 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
    <ul>
     <li>Theme preference (light/dark)</li>
     <li>Pinned app IDs</li>
+    <li>Whether you view the apps as a list or as an app drawer</li>
     <li>Local launch counts for listed apps</li>
     <li>Whether you dismissed the local-storage notice</li>
    </ul>
@@ -277,9 +288,9 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
    <p>If you create an account, this is what’s stored and why:</p>
    <ul>
     <li><strong>Your email address and password</strong>, to sign you in. Passwords are stored only as a secure hash by the sign-in service; nobody can read them.</li>
-    <li><strong>A display name</strong>, if you enter one, and the date you signed up.</li>
+    <li><strong>A screen name and a profile picture</strong>, if you choose them (the picture is one of the built-in drawings; nothing is uploaded), and the date you signed up.</li>
     <li><strong>Synced app data</strong>: the text records, settings and progress of apps you sign in to, so they match across your devices. Files such as photos, PDFs, audiobooks and attachments are never uploaded and stay on each device.</li>
-    <li>Your browser keeps a sign-in token in local storage for each site where you’re signed in (not a cookie). Signing out removes it.</li>
+    <li>Your browser keeps a sign-in token in local storage for each site where you’re signed in (not a cookie). If you turn off “Keep me signed in on this device,” it’s kept in session storage instead and is removed when you close the browser. Signing out removes it. This hub page reads it only to show your picture and screen name in the header; it doesn’t send it anywhere.</li>
    </ul>
    <p>Two services handle this on my behalf. <strong>Supabase</strong> hosts the account database and sign-in (servers in the eastern United States; <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Supabase privacy policy</a>). <strong>Resend</strong> sends account emails such as sign-up confirmations and password resets from no-reply@mail.mcbflow.com (<a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Resend privacy policy</a>). Your data isn’t sold, shared for advertising, or used for anything other than running your account. Each account can read only its own data.</p>
    <p>On the <a href="/account.html">Account</a> page you can export all your synced data as a file, delete one app’s synced data, change your email or password, or delete your account. Deleting your account permanently removes your login, profile and all synced data. Data saved inside each app on your own devices isn’t affected. Synced data is kept until you delete it or your account.</p>
@@ -344,7 +355,7 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
    <button class="modalClose" data-close="confirmModal" type="button" aria-label="Cancel">×</button>
   </div>
   <div class="modalBody">
-   <p id="confirmDesc">This permanently erases this site’s saved pins, launch statistics, theme preference, and storage-notice preference from this browser. It cannot be undone. Linked apps’ own data is not deleted by this action.</p>
+   <p id="confirmDesc">This permanently erases this site’s saved pins, launch statistics, theme and view preferences, and storage-notice preference from this browser. It cannot be undone. Linked apps’ own data is not deleted by this action.</p>
   </div>
   <div class="modalFoot">
    <button class="btn" data-close="confirmModal" type="button">Cancel</button>
@@ -356,39 +367,40 @@ if (window.top !== window.self) { document.documentElement.style.display = "none
 <div id="toast" class="toast" role="status" aria-live="polite">Copied</div>
 
 <div id="storageBanner" class="storage-banner" role="region" aria-label="Local storage notice">
- <div>This site uses browser local storage for pins, local launch counts, and theme. No advertising or analytics scripts are included in this page.</div>
+ <div>This site uses browser local storage for pins, local launch counts, theme and view. No advertising or analytics scripts are included in this page.</div>
  <button id="acceptStorage" class="btn btnPrimary sm" type="button">Got it</button>
 </div>
 
+<script src="/mb-avatars.js"></script>
 <script>
 const APPS = [
-{id:"mbmoney",name:"Money",domain:"money.mcbflow.com",url:"https://money.mcbflow.com",category:"Finance",accent:"finance",icon:"$",install:true,tagline:"Track your net worth without the spreadsheet maze.",description:"See cash flow and savings goals in one simple dashboard. Manage personal wealth without complex accounting software.",features:["Wealth tracking","Cash flow","Savings goals","Account overview"]},
-{id:"mbwishlist",name:"Wishlist",domain:"wishlist.mcbflow.com",url:"https://wishlist.mcbflow.com",category:"Finance",accent:"finance",icon:"W",install:true,tagline:"Plan purchases before you spend.",description:"Keep planned purchases in one list, sorted by need vs. want, price, and need-by date. Check items out from a cart and see your spend totals in Purchased history.",features:["Need vs. want","Cart & checkout","Purchase history","JSON/CSV backup"]},
-{id:"mbmealprep",name:"Meal Prep",domain:"mealprep.mcbflow.com",url:"https://mealprep.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"＋",install:true,tagline:"Generate your weekly grocery list automatically.",description:"Scale recipes and hit nutrition targets without manual math. Plan meals quickly so you can get in and out of the kitchen.",features:["Recipe scaling","Grocery list","Nutrition targets","Weekly planning"]},
-{id:"mbactionplan",name:"Action Plan",domain:"actionplan.mcbflow.com",url:"https://actionplan.mcbflow.com",category:"Productivity",accent:"productivity",icon:"✓",install:true,tagline:"Get the right work done today.",description:"Focus on top priorities with a visual matrix and built-in timer. Task data is designed to stay on your machine in that app.",features:["Priority matrix","Focus timer","Projects","Local backup"]},
-{id:"mbauto",name:"Auto",domain:"auto.mcbflow.com",url:"https://auto.mcbflow.com",category:"Assets",accent:"assets",icon:"A",install:true,tagline:"Log maintenance and track fuel costs in one place.",description:"Keep service records, track cost of ownership, and know when maintenance is due.",features:["Service log","Fuel tracking","Repair history","Ownership costs"]},
-{id:"mbreading",name:"Reading",domain:"reading.mcbflow.com",url:"https://reading.mcbflow.com",category:"Knowledge",accent:"knowledge",icon:"B",install:true,tagline:"Turn books into usable knowledge.",description:"Track your reading queue and save takeaways next to the source material.",features:["Reading queue","Progress","Notes","Takeaways"]},
-{id:"mbgardening",name:"Garden",domain:"garden.mcbflow.com",url:"https://garden.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"✦",install:true,tagline:"Plan your planting schedule before the season gets complicated.",description:"Map garden beds and log harvests. Keep a record of what grew well for next year.",features:["Bed planning","Planting schedule","Crop tracking","Harvest log"]},
-{id:"mbfishing",name:"Fishing",domain:"fishing.mcbflow.com",url:"https://fishing.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"F",install:true,tagline:"Log a catch with one tap.",description:"Record each fish as you catch it, then look back through your catches on a map and in simple stats. No account needed; your catches are saved in your browser, not on a server.",features:["One-tap logging","Catch history","Map","Stats"]},
-{id:"mbnutrition",name:"Nutrition",domain:"nutrition.mcbflow.com",url:"https://nutrition.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"N",install:true,tagline:"Log calories, macros and water in a tap.",description:"Track calories, macros and hydration from about 7,800 foods, set personal targets, and log fasting and supplements. No account needed.",features:["Food log","Macro targets","Hydration","Fasting & supplements"]},
-{id:"mbnotes",name:"Notes",domain:"notes.mcbflow.com",url:"https://notes.mcbflow.com",category:"Productivity",accent:"productivity",icon:"N",install:true,tagline:"Quick notes and checklists that stay on your device.",description:"Write notes and checklists, pin, tag and link them, and import from Google Keep. Runs in your browser with no account.",features:["Notes & checklists","Tags & links","Google Keep import","Archive & trash"]},
-{id:"mbpayday",name:"Payday",domain:"payday.mcbflow.com",url:"https://payday.mcbflow.com",category:"Finance",accent:"finance",icon:"P",install:true,tagline:"Track your hours. Check your pay.",description:"Log shifts or clock in and out, estimate overtime and take-home pay, and compare it with your paystubs. Pay and tax figures are rough planning estimates.",features:["Time clock","Overtime by job","Take-home estimate","Paystub check"]},
-{id:"mbweather",name:"Weather",domain:"weather.mcbflow.com",url:"https://weather.mcbflow.com",category:"Utilities",accent:"utilities",icon:"W",install:true,tagline:"Check the forecast without the clutter.",description:"See your forecast, hourly outlook, radar and alerts in one fast browser app. Your settings stay on this device; weather services receive only the coordinates you look up.",features:["Forecast","Hourly","Radar","Alerts"]},
+{id:"money",name:"Money",domain:"money.mcbflow.com",url:"https://money.mcbflow.com",category:"Finance",accent:"finance",icon:"$",install:true,tagline:"Track your net worth without the spreadsheet maze.",description:"See cash flow and savings goals in one simple dashboard. Manage personal wealth without complex accounting software.",features:["Wealth tracking","Cash flow","Savings goals","Account overview"]},
+{id:"wishlist",name:"Wishlist",domain:"wishlist.mcbflow.com",url:"https://wishlist.mcbflow.com",category:"Finance",accent:"finance",icon:"W",install:true,tagline:"Plan purchases before you spend.",description:"Keep planned purchases in one list, sorted by need vs. want, price, and need-by date. Check items out from a cart and see your spend totals in Purchased history.",features:["Need vs. want","Cart & checkout","Purchase history","JSON/CSV backup"]},
+{id:"mealprep",name:"Meal Prep",domain:"mealprep.mcbflow.com",url:"https://mealprep.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"＋",install:true,tagline:"Generate your weekly grocery list automatically.",description:"Scale recipes and hit nutrition targets without manual math. Plan meals quickly so you can get in and out of the kitchen.",features:["Recipe scaling","Grocery list","Nutrition targets","Weekly planning"]},
+{id:"actionplan",name:"Action Plan",domain:"actionplan.mcbflow.com",url:"https://actionplan.mcbflow.com",category:"Productivity",accent:"productivity",icon:"✓",install:true,tagline:"Get the right work done today.",description:"Focus on top priorities with a visual matrix and built-in timer. Task data is designed to stay on your machine in that app.",features:["Priority matrix","Focus timer","Projects","Local backup"]},
+{id:"auto",name:"Auto",domain:"auto.mcbflow.com",url:"https://auto.mcbflow.com",category:"Assets",accent:"assets",icon:"A",install:true,tagline:"Log maintenance and track fuel costs in one place.",description:"Keep service records, track cost of ownership, and know when maintenance is due.",features:["Service log","Fuel tracking","Repair history","Ownership costs"]},
+{id:"reading",name:"Reading",domain:"reading.mcbflow.com",url:"https://reading.mcbflow.com",category:"Knowledge",accent:"knowledge",icon:"B",install:true,tagline:"Turn books into usable knowledge.",description:"Track your reading queue and save takeaways next to the source material.",features:["Reading queue","Progress","Notes","Takeaways"]},
+{id:"garden",name:"Garden",domain:"garden.mcbflow.com",url:"https://garden.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"✦",install:true,tagline:"Plan your planting schedule before the season gets complicated.",description:"Map garden beds and log harvests. Keep a record of what grew well for next year.",features:["Bed planning","Planting schedule","Crop tracking","Harvest log"]},
+{id:"fishing",name:"Fishing",domain:"fishing.mcbflow.com",url:"https://fishing.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"F",install:true,tagline:"Log a catch with one tap.",description:"Record each fish as you catch it, then look back through your catches on a map and in simple stats. No account needed; your catches are saved in your browser, not on a server.",features:["One-tap logging","Catch history","Map","Stats"]},
+{id:"nutrition",name:"Nutrition",domain:"nutrition.mcbflow.com",url:"https://nutrition.mcbflow.com",category:"Lifestyle",accent:"lifestyle",icon:"N",install:true,tagline:"Log calories, macros and water in a tap.",description:"Track calories, macros and hydration from about 7,800 foods, set personal targets, and log fasting and supplements. No account needed.",features:["Food log","Macro targets","Hydration","Fasting & supplements"]},
+{id:"notes",name:"Notes",domain:"notes.mcbflow.com",url:"https://notes.mcbflow.com",category:"Productivity",accent:"productivity",icon:"N",install:true,tagline:"Quick notes and checklists that stay on your device.",description:"Write notes and checklists, pin, tag and link them, and import from Google Keep. Runs in your browser with no account.",features:["Notes & checklists","Tags & links","Google Keep import","Archive & trash"]},
+{id:"payday",name:"Payday",domain:"payday.mcbflow.com",url:"https://payday.mcbflow.com",category:"Finance",accent:"finance",icon:"P",install:true,tagline:"Track your hours. Check your pay.",description:"Log shifts or clock in and out, estimate overtime and take-home pay, and compare it with your paystubs. Pay and tax figures are rough planning estimates.",features:["Time clock","Overtime by job","Take-home estimate","Paystub check"]},
+{id:"weather",name:"Weather",domain:"weather.mcbflow.com",url:"https://weather.mcbflow.com",category:"Utilities",accent:"utilities",icon:"W",install:true,tagline:"Check the forecast without the clutter.",description:"See your forecast, hourly outlook, radar and alerts in one fast browser app. Your settings stay on this device; weather services receive only the coordinates you look up.",features:["Forecast","Hourly","Radar","Alerts"]},
 ];
 // Logos: each app's own favicon.svg, copied in (embedded so the hub never loads anything from the apps).
 const LOGOS = {
- mbmoney: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbmo-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2b9172"/><stop offset=".55" stop-color="#087F5B"/><stop offset="1" stop-color="#066649"/></linearGradient><clipPath id="mbmo-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbmo-c1)"><rect width="64" height="64" fill="url(#mbmo-g1)"/><g transform="translate(0,2.3)"><rect x="16" y="36" width="7" height="13" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><rect x="28.5" y="30" width="7" height="19" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><rect x="41" y="33" width="7" height="16" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><path d="M 15,27 26,19 35,23.5 48,14" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="48" cy="14" r="3.5999999" fill="#ffffff"/></g></g></svg>`,
- mbwishlist: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbwi-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#de8a29"/><stop offset=".55" stop-color="#D97706"/><stop offset="1" stop-color="#ae5f05"/></linearGradient><clipPath id="mbwi-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbwi-c1)"><rect width="64" height="64" fill="url(#mbwi-g1)"/><path d="M33 12h15a4 4 0 0 1 4 4v15a4 4 0 0 1-1.2 2.8L33.5 51.2a4 4 0 0 1-5.7 0L12.8 36.2a4 4 0 0 1 0-5.7L30.2 13.2A4 4 0 0 1 33 12z" fill="#fff"/> <circle cx="43.5" cy="20.5" r="3.2" fill="#D97706"/><path d="M30.5 41c-4.4-3-6.8-5.2-6.8-7.8a3.5 3.5 0 0 1 6.8-1.1 3.5 3.5 0 0 1 6.8 1.1c0 2.6-2.4 4.8-6.8 7.8z" fill="#9A4F05"/></g></svg>`,
- mbmealprep: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbme-g19" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#e46a58"/><stop offset=".55" stop-color="#E0523D"/><stop offset="1" stop-color="#b34231"/></linearGradient><clipPath id="mbme-c19"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbme-c19)"><rect width="64" height="64" fill="url(#mbme-g19)"/><rect x="14.5" y="18.5" width="35" height="27" rx="4" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M 33,19 V 45 M 33,32 H 49" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect x="16.151796" y="19.755266" width="15.855019" height="24.410162" rx="1.8294252" fill="#ffffff" fill-opacity="0.55" style="stroke-width:1.19065"/></g></svg>`,
- mbactionplan: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbac-g7" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#6860b2"/><stop offset=".55" stop-color="#4F46A5"/><stop offset="1" stop-color="#3f3884"/></linearGradient><clipPath id="mbac-c7"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbac-c7)"><rect width="64" height="64" fill="url(#mbac-g7)"/><rect x="15.5" y="15.5" width="33" height="33" rx="5" stroke="#fff" stroke-opacity=".55" stroke-width="4.5" fill="none"/><path d="m 23,32.000052 6.5,6.5 11.5,-13" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>`,
- mbauto: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#44809f"/><stop offset=".55" stop-color="#256B8F"/><stop offset="1" stop-color="#1e5672"/></linearGradient><clipPath id="c"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#c)"><rect width="64" height="64" fill="url(#g)"/><path d="m 16.5,43.990999 a 17,17 0 1 1 31,0" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="m 32,37.990999 10,-11" fill="none" stroke="#F2B640" stroke-width="5.5" stroke-linecap="round"/><circle cx="32" cy="37.990997" r="5" fill="#fff"/></g></svg>`,
- mbreading: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbre-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#9a5e8c"/><stop offset=".55" stop-color="#8A4479"/><stop offset="1" stop-color="#6e3661"/></linearGradient><clipPath id="mbre-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbre-c1)"><rect width="64" height="64" fill="url(#mbre-g1)"/><path d="M31 22.5C26 19 18.5 18 11.5 19.3v23.5c7-1.3 14.5-.3 19.5 3.2z" fill="#fff"/><path d="M33 22.5c5-3.5 12.5-4.5 19.5-3.2v23.5c-7-1.3-14.5-.3-19.5 3.2z" fill="#fff"/> <path d="M40 19.4V31.5l3.2-2.4 3.2 2.4V19" fill="#F2B640"/></g></svg>`,
- mbgardening: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbga-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#4f9051"/><stop offset=".55" stop-color="#2F7D32"/><stop offset="1" stop-color="#266428"/></linearGradient><clipPath id="mbga-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbga-c1)"><rect width="64" height="64" fill="url(#mbga-g1)"/><rect x="12" y="34" width="40" height="7" rx="3" fill="#fff" fill-opacity=".55"/><rect x="12" y="44" width="40" height="7" rx="3" fill="#fff" fill-opacity=".55"/><path d="M32 34V23" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M32 25c-.8-6.5-5.5-10-12-10 0 6.5 5 10 12 10z" fill="#fff"/><path d="M32 23c.8-6.5 5.5-10 12-10 0 6.5-5 10-12 10z" fill="#F2B640"/></g></svg>`,
- mbfishing: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbfi-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2d809a"/><stop offset=".55" stop-color="#0B6B8A"/><stop offset="1" stop-color="#09566e"/></linearGradient><clipPath id="mbfi-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbfi-c1)"><rect width="64" height="64" fill="url(#mbfi-g1)"/><path d="M13 51C24 36 36 22 50 13" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><circle cx="20" cy="43" r="4.6" fill="#fff"/><circle cx="20" cy="43" r="1.6" fill="#0B6B8A"/> <path d="M50 13v23" stroke="#fff" stroke-opacity=".8" stroke-width="2.4"/><path d="M50 38v5.5a4 4 0 0 1-8 0" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="50" cy="35" rx="3.2" ry="4.2" fill="#F2B640"/></g></svg>`,
- mbnutrition: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbnu-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#7bb02f"/><stop offset=".55" stop-color="#65A30D"/><stop offset="1" stop-color="#51820a"/></linearGradient><clipPath id="mbnu-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbnu-c1)"><rect width="64" height="64" fill="url(#mbnu-g1)"/><path d="M32 15 C37 15 39.5 19 40.5 23.5 C41.5 28 45 31 45 37 A13 13 0 0 1 19 37 C19 31 22.5 28 23.5 23.5 C24.5 19 27 15 32 15Z" fill="#fff" fill-opacity=".3" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="37" r="6.5" fill="#F6C860"/></g></svg>`,
- mbweather: `<svg viewBox="0 0 64 64" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbwe-g25" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2595cf"/><stop offset=".55" stop-color="#0284C7"/><stop offset="1" stop-color="#026a9f"/></linearGradient><clipPath id="mbwe-c25"><rect width="64" height="64" rx="18"/></clipPath><linearGradient xlink:href="#mbwe-g25" id="mbwe-linearGradient5" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"/></defs><g clip-path="url(#mbwe-c25)"><rect width="64" height="64" fill="url(#mbwe-g25)"/><g transform="translate(-0.66503232,1.1221731)"><circle cx="41" cy="22.5" r="10" fill="#ffffff" fill-opacity="0.55"/><path d="M 21.5,47 H 43 A 8.005623,8.005623 0 0 0 43.6,31 11,11 0 0 0 22.4,28.8 9.2,9.2 0 0 0 21.5,47 Z" fill="url(#mbwe-g25)" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" style="fill:url(#mbwe-linearGradient5)"/></g></g></svg>`,
- mbnotes: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="nfav-g" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#edbe2b"/><stop offset=".55" stop-color="#EAB308"/><stop offset="1" stop-color="#bb8f06"/></linearGradient><clipPath id="nfav-c"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#nfav-c)"><rect width="64" height="64" fill="url(#nfav-g)"/><path d="M24 26.5h16M24 33.5h16M24 40.5h9" stroke="#fff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M17.5 14.5h21.5l7.5 7.5v27.5h-29z" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M39 14.5v7.5h7.5" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>`,
- mbpayday: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="pdg" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#C73874"/><stop offset=".55" stop-color="#BE185D"/><stop offset="1" stop-color="#98134A"/></linearGradient><clipPath id="pdc"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#pdc)"><rect width="64" height="64" fill="url(#pdg)"/><g transform="translate(3.2 3.6) scale(.9)"><rect x="29.75" y="13" width="4.5" height="6.5" fill="#fff"/><rect x="25.5" y="8.5" width="13" height="6.5" rx="3" fill="#F2B640"/><rect x="42.13" y="19.57" width="5.2" height="8.4" rx="2" fill="#fff" transform="rotate(45 44.73 23.77)"/><circle cx="32" cy="36.5" r="18" fill="#fff"/><path d="M32 25.6v3.2M32 44.6v3.2" stroke="#A8154F" stroke-width="3.4" stroke-linecap="round"/><path d="M37.2 31.4C36.2 29.7 34.3 28.8 32 28.8 29.2 28.8 27.1 30.3 27.1 32.5 27.1 37.4 37.1 35.2 37.1 40.4 37.1 42.7 34.9 44.4 32 44.4 29.5 44.4 27.6 43.4 26.7 41.6" fill="none" stroke="#A8154F" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg>`,
+ money: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbmo-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2b9172"/><stop offset=".55" stop-color="#087F5B"/><stop offset="1" stop-color="#066649"/></linearGradient><clipPath id="mbmo-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbmo-c1)"><rect width="64" height="64" fill="url(#mbmo-g1)"/><g transform="translate(0,2.3)"><rect x="16" y="36" width="7" height="13" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><rect x="28.5" y="30" width="7" height="19" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><rect x="41" y="33" width="7" height="16" rx="1.5" fill="#ffffff" fill-opacity="0.55"/><path d="M 15,27 26,19 35,23.5 48,14" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="48" cy="14" r="3.5999999" fill="#ffffff"/></g></g></svg>`,
+ wishlist: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbwi-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#de8a29"/><stop offset=".55" stop-color="#D97706"/><stop offset="1" stop-color="#ae5f05"/></linearGradient><clipPath id="mbwi-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbwi-c1)"><rect width="64" height="64" fill="url(#mbwi-g1)"/><path d="M33 12h15a4 4 0 0 1 4 4v15a4 4 0 0 1-1.2 2.8L33.5 51.2a4 4 0 0 1-5.7 0L12.8 36.2a4 4 0 0 1 0-5.7L30.2 13.2A4 4 0 0 1 33 12z" fill="#fff"/> <circle cx="43.5" cy="20.5" r="3.2" fill="#D97706"/><path d="M30.5 41c-4.4-3-6.8-5.2-6.8-7.8a3.5 3.5 0 0 1 6.8-1.1 3.5 3.5 0 0 1 6.8 1.1c0 2.6-2.4 4.8-6.8 7.8z" fill="#9A4F05"/></g></svg>`,
+ mealprep: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbme-g19" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#e46a58"/><stop offset=".55" stop-color="#E0523D"/><stop offset="1" stop-color="#b34231"/></linearGradient><clipPath id="mbme-c19"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbme-c19)"><rect width="64" height="64" fill="url(#mbme-g19)"/><rect x="14.5" y="18.5" width="35" height="27" rx="4" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M 33,19 V 45 M 33,32 H 49" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect x="16.151796" y="19.755266" width="15.855019" height="24.410162" rx="1.8294252" fill="#ffffff" fill-opacity="0.55" style="stroke-width:1.19065"/></g></svg>`,
+ actionplan: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbac-g7" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#6860b2"/><stop offset=".55" stop-color="#4F46A5"/><stop offset="1" stop-color="#3f3884"/></linearGradient><clipPath id="mbac-c7"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbac-c7)"><rect width="64" height="64" fill="url(#mbac-g7)"/><rect x="15.5" y="15.5" width="33" height="33" rx="5" stroke="#fff" stroke-opacity=".55" stroke-width="4.5" fill="none"/><path d="m 23,32.000052 6.5,6.5 11.5,-13" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>`,
+ auto: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#44809f"/><stop offset=".55" stop-color="#256B8F"/><stop offset="1" stop-color="#1e5672"/></linearGradient><clipPath id="c"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#c)"><rect width="64" height="64" fill="url(#g)"/><path d="m 16.5,43.990999 a 17,17 0 1 1 31,0" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="m 32,37.990999 10,-11" fill="none" stroke="#F2B640" stroke-width="5.5" stroke-linecap="round"/><circle cx="32" cy="37.990997" r="5" fill="#fff"/></g></svg>`,
+ reading: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbre-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#9a5e8c"/><stop offset=".55" stop-color="#8A4479"/><stop offset="1" stop-color="#6e3661"/></linearGradient><clipPath id="mbre-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbre-c1)"><rect width="64" height="64" fill="url(#mbre-g1)"/><path d="M31 22.5C26 19 18.5 18 11.5 19.3v23.5c7-1.3 14.5-.3 19.5 3.2z" fill="#fff"/><path d="M33 22.5c5-3.5 12.5-4.5 19.5-3.2v23.5c-7-1.3-14.5-.3-19.5 3.2z" fill="#fff"/> <path d="M40 19.4V31.5l3.2-2.4 3.2 2.4V19" fill="#F2B640"/></g></svg>`,
+ garden: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbga-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#4f9051"/><stop offset=".55" stop-color="#2F7D32"/><stop offset="1" stop-color="#266428"/></linearGradient><clipPath id="mbga-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbga-c1)"><rect width="64" height="64" fill="url(#mbga-g1)"/><rect x="12" y="34" width="40" height="7" rx="3" fill="#fff" fill-opacity=".55"/><rect x="12" y="44" width="40" height="7" rx="3" fill="#fff" fill-opacity=".55"/><path d="M32 34V23" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M32 25c-.8-6.5-5.5-10-12-10 0 6.5 5 10 12 10z" fill="#fff"/><path d="M32 23c.8-6.5 5.5-10 12-10 0 6.5-5 10-12 10z" fill="#F2B640"/></g></svg>`,
+ fishing: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbfi-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2d809a"/><stop offset=".55" stop-color="#0B6B8A"/><stop offset="1" stop-color="#09566e"/></linearGradient><clipPath id="mbfi-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbfi-c1)"><rect width="64" height="64" fill="url(#mbfi-g1)"/><path d="M13 51C24 36 36 22 50 13" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/><circle cx="20" cy="43" r="4.6" fill="#fff"/><circle cx="20" cy="43" r="1.6" fill="#0B6B8A"/> <path d="M50 13v23" stroke="#fff" stroke-opacity=".8" stroke-width="2.4"/><path d="M50 38v5.5a4 4 0 0 1-8 0" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="50" cy="35" rx="3.2" ry="4.2" fill="#F2B640"/></g></svg>`,
+ nutrition: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="mbnu-g1" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#7bb02f"/><stop offset=".55" stop-color="#65A30D"/><stop offset="1" stop-color="#51820a"/></linearGradient><clipPath id="mbnu-c1"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#mbnu-c1)"><rect width="64" height="64" fill="url(#mbnu-g1)"/><path d="M32 15 C37 15 39.5 19 40.5 23.5 C41.5 28 45 31 45 37 A13 13 0 0 1 19 37 C19 31 22.5 28 23.5 23.5 C24.5 19 27 15 32 15Z" fill="#fff" fill-opacity=".3" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="37" r="6.5" fill="#F6C860"/></g></svg>`,
+ weather: `<svg viewBox="0 0 64 64" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mbwe-g25" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#2595cf"/><stop offset=".55" stop-color="#0284C7"/><stop offset="1" stop-color="#026a9f"/></linearGradient><clipPath id="mbwe-c25"><rect width="64" height="64" rx="18"/></clipPath><linearGradient xlink:href="#mbwe-g25" id="mbwe-linearGradient5" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"/></defs><g clip-path="url(#mbwe-c25)"><rect width="64" height="64" fill="url(#mbwe-g25)"/><g transform="translate(-0.66503232,1.1221731)"><circle cx="41" cy="22.5" r="10" fill="#ffffff" fill-opacity="0.55"/><path d="M 21.5,47 H 43 A 8.005623,8.005623 0 0 0 43.6,31 11,11 0 0 0 22.4,28.8 9.2,9.2 0 0 0 21.5,47 Z" fill="url(#mbwe-g25)" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" style="fill:url(#mbwe-linearGradient5)"/></g></g></svg>`,
+ notes: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="nfav-g" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#edbe2b"/><stop offset=".55" stop-color="#EAB308"/><stop offset="1" stop-color="#bb8f06"/></linearGradient><clipPath id="nfav-c"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#nfav-c)"><rect width="64" height="64" fill="url(#nfav-g)"/><path d="M24 26.5h16M24 33.5h16M24 40.5h9" stroke="#fff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M17.5 14.5h21.5l7.5 7.5v27.5h-29z" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M39 14.5v7.5h7.5" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>`,
+ payday: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="pdg" gradientUnits="userSpaceOnUse" x1="10" y1="0" x2="54" y2="64"><stop offset="0" stop-color="#616D7E"/><stop offset=".55" stop-color="#475569"/><stop offset="1" stop-color="#394454"/></linearGradient><clipPath id="pdc"><rect width="64" height="64" rx="18"/></clipPath></defs><g clip-path="url(#pdc)"><rect width="64" height="64" fill="url(#pdg)"/><g transform="translate(3.2 3.6) scale(.9)"><rect x="29.75" y="13" width="4.5" height="6.5" fill="#fff"/><rect x="25.5" y="8.5" width="13" height="6.5" rx="3" fill="#F2B640"/><rect x="42.13" y="19.57" width="5.2" height="8.4" rx="2" fill="#fff" transform="rotate(45 44.73 23.77)"/><circle cx="32" cy="36.5" r="18" fill="#fff"/><path d="M32 25.6v3.2M32 44.6v3.2" stroke="#3F4B5D" stroke-width="3.4" stroke-linecap="round"/><path d="M37.2 31.4C36.2 29.7 34.3 28.8 32 28.8 29.2 28.8 27.1 30.3 27.1 32.5 27.1 37.4 37.1 35.2 37.1 40.4 37.1 42.7 34.9 44.4 32 44.4 29.5 44.4 27.6 43.4 26.7 41.6" fill="none" stroke="#3F4B5D" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg>`,
 };
 // Install buttons open the app with ?install; the app shows its own install prompt (mb-install.js v3.1).
 // To add one for a new app: give its APPS entry install:true (the app must ship mb-install.js v3.1 or later).
@@ -401,7 +413,19 @@ function appIcon(a) {
 }
 const CATS = ["All", "Finance", "Lifestyle", "Productivity", "Assets", "Knowledge", "Utilities"];
 const STATUS = Object.fromEntries(APPS.map(a => [a.id, {state:"unknown"}]));
-const STATS_KEY = "hub.launches", PIN_KEY = "hub.pins", THEME_KEY = "hub.theme", NOTICE_KEY = "hub.notice";
+const STATS_KEY = "hub.launches", PIN_KEY = "hub.pins", THEME_KEY = "hub.theme", NOTICE_KEY = "hub.notice", VIEW_KEY = "hub.view";
+
+// v6.2.0 renamed the app ids (mbmoney → money …). Move saved pins and launch counts to the new ids once.
+const OLD_IDS = {mbmoney:"money",mbwishlist:"wishlist",mbmealprep:"mealprep",mbactionplan:"actionplan",mbauto:"auto",mbreading:"reading",mbgardening:"garden",mbfishing:"fishing",mbnutrition:"nutrition",mbweather:"weather",mbnotes:"notes",mbpayday:"payday"}; // legacy-import (ids saved by hub v6.1 and earlier)
+(function migrateIds() {
+ const pins = load(PIN_KEY, null), launches = load(STATS_KEY, null);
+ if (Array.isArray(pins) && pins.some(id => OLD_IDS[id])) save(PIN_KEY, [...new Set(pins.map(id => OLD_IDS[id] || id))]);
+ if (launches && typeof launches === "object" && !Array.isArray(launches) && Object.keys(launches).some(id => OLD_IDS[id])) {
+  const out = {};
+  Object.keys(launches).forEach(id => { const n = OLD_IDS[id] || id; out[n] = (Number(out[n]) || 0) + (Number(launches[id]) || 0); });
+  save(STATS_KEY, out);
+ }
+})();
 
 // Validate anything read back from storage so a corrupted or hand-edited value can't break the page.
 const APP_IDS = APPS.map(a => a.id);
@@ -416,7 +440,8 @@ let state = {
  category: "All",
  launches: cleanLaunches(load(STATS_KEY, {})),
  pins: cleanPins(load(PIN_KEY, [])),
- theme: load(THEME_KEY, "light") === "dark" ? "dark" : "light"
+ theme: load(THEME_KEY, "light") === "dark" ? "dark" : "light",
+ view: load(VIEW_KEY, "list") === "drawer" ? "drawer" : "list"
 };
 
 let lastFocus = null;
@@ -433,17 +458,45 @@ function applyTheme(theme) {
  if (meta) meta.setAttribute("content", theme === "dark" ? "#1e2126" : "#ffffff");
  btn.setAttribute("aria-label", "Dark mode");
 }
-// Account button: reads the sign-in token supabase-js saves on this site (set by account.html); this page loads no account code.
-(function accountButton() {
- let signedIn = false, email = "";
- try {
-  const t = JSON.parse(localStorage.getItem("sb-rxvcjdwmvxhwbdwncfhj-auth-token") || "null");
-  if (t && t.refresh_token && t.user) { signedIn = true; email = t.user.email || ""; }
- } catch (_) {}
- document.getElementById("acctLbl").textContent = signedIn ? "Account" : "Sign in";
- document.getElementById("acctDot").className = "statusDot " + (signedIn ? "green" : "dim");
- document.getElementById("accountBtn").title = signedIn ? "Signed in as " + email : "Optional account for syncing app data";
-})();
+// Account button + greeting: read the sign-in that account.html saved on this site (localStorage when "Keep me signed in"
+// is on, sessionStorage when it's off). This page loads no account code and sends nothing; it only shows who is signed in.
+const SESSION_KEY = "sb-rxvcjdwmvxhwbdwncfhj-auth-token";
+function savedSignIn() {
+ for (const store of ["localStorage", "sessionStorage"]) {
+  try {
+   const t = JSON.parse(window[store].getItem(SESSION_KEY) || "null");
+   if (t && t.refresh_token && t.user) {
+    const md = t.user.user_metadata || {};
+    return { email: t.user.email || "", name: String(md.display_name || "").trim().slice(0, 60), avatar: String(md.avatar || "") };
+   }
+  } catch (_) {}
+ }
+ return null;
+}
+const ICON_USER = '<svg class="mbs-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>';
+function paintAccount() {
+ const who = savedSignIn(), b = document.getElementById("accountBtn"), AVS = window.MBAvatars;
+ b.classList.toggle("is-in", !!who);
+ if (who) {
+  const pic = AVS && AVS.ids.includes(who.avatar);
+  const initial = AVS ? AVS.initialOf(who.name || who.email) : esc((who.name || who.email || "?").trim().charAt(0).toUpperCase());
+  b.innerHTML = `<span class="tb-av${pic ? " pic" : ""}" aria-hidden="true">${AVS ? AVS.svg(who.avatar, initial) : initial}<i></i></span><span class="tb-lbl">Account</span>`;
+  const t = "Account: " + (who.name ? `${who.name} (${who.email})` : who.email);
+  b.setAttribute("aria-label", t); b.title = t;
+ } else {
+  b.innerHTML = ICON_USER + '<span class="tb-lbl">Sign in</span>';
+  b.setAttribute("aria-label", "Sign in to sync across devices"); b.title = "Sign in to sync across devices (optional)";
+ }
+ const g = document.getElementById("greet");
+ if (g) {
+  const name = who ? who.name : "";
+  g.textContent = window.MBAvatars ? window.MBAvatars.greeting(name) : "";
+ }
+}
+paintAccount();
+setInterval(paintAccount, 60000);   // keep the time of day current
+window.addEventListener("storage", e => { if (e.key === SESSION_KEY) paintAccount(); });   // signed in or out in another tab
+window.addEventListener("pageshow", e => { if (e.persisted) paintAccount(); });          // back from account.html
 document.getElementById("themeToggle").addEventListener("click", () => {
  state.theme = state.theme === "light" ? "dark" : "light";
  applyTheme(state.theme);
@@ -468,10 +521,30 @@ function statusLabel(app) {
   return s === "live" ? "REACHABLE" : s === "offline" ? "UNREACHABLE" : s === "checking" ? "CHECKING" : "NOT CHECKED";
 }
 
+function renderView() {
+ document.querySelectorAll("[data-hubview]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.hubview === state.view)));
+ document.getElementById("toolsGrid").hidden = state.view !== "list";
+ document.getElementById("drawerGrid").hidden = state.view !== "drawer";
+}
+
+// App drawer: a phone-style home screen of app badges. Same search, filters and pin order as the list.
+function renderDrawer(apps) {
+ const d = document.getElementById("drawerGrid");
+ d.innerHTML = apps.map(a => {
+  const p = state.pins.includes(a.id), svg = LOGOS[a.id];
+  const icon = svg ? `<img src="data:image/svg+xml,${encodeURIComponent(svg)}" alt="" width="64" height="64">` : `<span class="icon accent-${a.accent}">${esc(a.icon)}</span>`;
+  return `<li><a class="dTile" href="${esc(a.url)}" data-launch="${a.id}" title="${esc(a.name)} · ${esc(a.domain)}"><span class="dIcon" aria-hidden="true">${icon}${p ? `<span class="dPin"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg></span>` : ""}</span><span class="dName">${esc(a.name)}</span>${p ? `<span class="vh">(pinned)</span>` : ""}</a></li>`;
+ }).join("");
+ d.querySelectorAll("[data-launch]").forEach(a => a.addEventListener("click", () => { const id = a.dataset.launch; state.launches[id] = (state.launches[id] || 0) + 1; save(STATS_KEY, state.launches); }));
+}
+
 function renderApps() {
  const grid = document.getElementById("toolsGrid"), empty = document.getElementById("emptyState"), apps = filteredApps();
  document.getElementById("resultMeta").textContent = `${apps.length} ${apps.length === 1 ? "tool" : "tools"} · ${APPS.length} total`;
  empty.hidden = apps.length !== 0;
+ renderView();
+ if (state.view === "drawer") { grid.innerHTML = ""; renderDrawer(apps); return; }
+ document.getElementById("drawerGrid").innerHTML = "";
 
  grid.innerHTML = apps.map((a, i) => {
   const s = STATUS[a.id], p = state.pins.includes(a.id);
@@ -589,6 +662,7 @@ function exportHubData() {
     exportedAt: new Date().toISOString(),
     site: "mcbflow.com hub",
     theme: state.theme,
+    view: state.view,
     pins: state.pins,
     launches: state.launches
   };
@@ -619,6 +693,11 @@ document.addEventListener("DOMContentLoaded", () => {
  });
 
  document.getElementById("refreshStatus").addEventListener("click", checkAll);
+
+ document.querySelectorAll("[data-hubview]").forEach(b => b.addEventListener("click", () => {
+  if (state.view === b.dataset.hubview) return;
+  state.view = b.dataset.hubview; save(VIEW_KEY, state.view); renderApps();
+ }));
 
  document.querySelectorAll("[data-close]").forEach(btn => {
    btn.addEventListener("click", () => closeModal(btn.dataset.close));
@@ -695,7 +774,7 @@ document.addEventListener("DOMContentLoaded", () => {
  document.getElementById("triggerResetBtn").addEventListener("click", () => openModal("confirmModal"));
  document.getElementById("confirmResetBtn").addEventListener("click", () => {
   try {
-   [STATS_KEY, PIN_KEY, THEME_KEY, NOTICE_KEY].forEach(k => localStorage.removeItem(k));
+   [STATS_KEY, PIN_KEY, THEME_KEY, NOTICE_KEY, VIEW_KEY].forEach(k => localStorage.removeItem(k));
   } catch(_) {
    closeModal("confirmModal");
    showToast("Couldn’t reach browser storage. Clear this site’s data in your browser settings.");
