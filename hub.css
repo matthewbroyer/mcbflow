@@ -341,7 +341,7 @@ h1{margin:8px 0 8px;font-size:clamp(24px,3vw,30px);line-height:1.2;letter-spacin
 /* hub: same 3px family line on top as the apps */
 body::before{content:"";position:fixed;left:0;right:0;top:0;height:3px;z-index:60;pointer-events:none;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 45%,#F2B640),#F2D27A)}
 /* hub: brand at the same spot and size as the apps' brand (logo x=16 desktop, 12 phone; line 2 hides under 420px) */
-.topbar .topbarInner.shell{width:auto;max-width:none;margin:0;padding:0 16px}
+.topbar .topbarInner.shell{width:auto;max-width:none;margin:3px 0 0;padding:0 16px;height:calc(var(--bar-h) - 4px)} /* same box as the apps' bar: 3px stripe + 52px row + 1px border = 56px, logo centred at 29px */
 .topbar .brand{gap:9px;padding:6px 8px;margin-left:-8px;border-radius:var(--r-sm)}
 .topbar .brand:hover{background:var(--surface-2)}
 .topbar .brandName{font-size:14.5px;font-weight:650;letter-spacing:-.005em;line-height:1.15}
