@@ -123,7 +123,8 @@
    <ul id="syncList" class="syncList"></ul>
    <p id="syncEmpty" class="muted" hidden>Nothing synced yet. Sync arrives app by app; signed-in apps will show up here.</p>
    <p id="syncMsg" class="formMsg" role="alert"></p>
-   <div class="formActions"><button id="exportBtn" class="btn" type="button">Export all synced data (JSON)</button></div>
+   <div class="formActions"><button id="exportBtn" class="btn" type="button">Export all synced data (JSON)</button><button id="importBtn" class="btn" type="button">Import synced data (JSON)…</button><input id="importFile" type="file" accept=".json,application/json" hidden></div>
+   <p class="muted small">Import takes a file from <b>Export all synced data</b> (for example after deleting an app’s synced copy). Your apps pick it up the next time they sync.</p>
   </section>
 
   <section class="panel" aria-labelledby="profileH">
@@ -165,7 +166,7 @@
  </div>
 
  <footer class="mb-foot">
-  <p class="mb-foot-main"><b>mcbflow.com</b> v6.2.0 · Free · No account needed</p>
+  <p class="mb-foot-main"><b>mcbflow.com</b> v6.3.0 · Free · No account needed</p>
   <nav class="mb-foot-links" aria-label="About mcbflow.com"><a href="/#privacy">Privacy</a><a href="/#terms">Terms</a><a href="/account.html" aria-current="page">Account</a><a href="mailto:matthewbroyer@outlook.com">Questions? Email me</a></nav>
   <p class="mb-foot-copy">© 2026 Matthew Broyer</p>
  </footer>
@@ -176,6 +177,22 @@
   <div class="modalHead"><div><div id="delAppTitle" class="modalTitle">Delete <span id="delAppName"></span> synced data?</div></div><button class="modalClose" data-close="delAppModal" type="button" aria-label="Cancel">×</button></div>
   <div class="modalBody"><p>This removes the copy saved to your account. The data inside the app on each device stays. If the app is still signed in somewhere, it will upload its data again the next time it syncs.</p></div>
   <div class="modalFoot"><button class="btn" data-close="delAppModal" type="button">Cancel</button><button id="delAppConfirm" class="btn btnDanger" type="button">Delete synced data</button></div>
+ </div>
+</div>
+
+<div id="impModal" class="modal" aria-hidden="true">
+ <div class="modalCard narrow" role="dialog" aria-modal="true" aria-labelledby="impTitle">
+  <div class="modalHead"><div><div id="impTitle" class="modalTitle">Import synced data?</div></div><button class="modalClose" data-close="impModal" type="button" aria-label="Cancel">×</button></div>
+  <div class="modalBody">
+   <p id="impSummary"></p>
+   <fieldset class="impChoice">
+    <legend class="sr-only">How to import</legend>
+    <label class="check"><input type="radio" name="impMode" value="missing" checked> <span><b>Add what’s missing</b><small>Anything newer on your account stays as it is. Best in most cases.</small></span></label>
+    <label class="check"><input type="radio" name="impMode" value="replace"> <span><b>Make this file the latest copy</b><small>Every record in the file replaces the one on your account, and your apps switch to it on their next sync.</small></span></label>
+   </fieldset>
+   <p id="impMsg" class="formMsg" role="alert"></p>
+  </div>
+  <div class="modalFoot"><button class="btn" data-close="impModal" type="button">Cancel</button><button id="impConfirm" class="btn btnPrimary" type="button">Import</button></div>
  </div>
 </div>
 
@@ -191,10 +208,10 @@
  </div>
 </div>
 
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script src="/vendor/supabase.js"></script>
 <script src="/mb-avatars.js"></script>
+<script src="/mb-ui.js"></script>
 <script src="/account.js"></script>
 </body>
 </html>

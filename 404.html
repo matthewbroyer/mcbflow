@@ -1,22 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-mb-app="hub">
 <head>
 <meta charset="utf-8">
 <!-- hub 404 page, made from the mb-release suite template (SUITE-STANDARDS §3). Hosts serve it for any missing URL, so every path here is absolute. -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 <meta name="robots" content="noindex">
 <title>Not found | mcbflow.com</title>
 <meta name="theme-color" content="#2563EB">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
+<script src="/mb-ui.js"></script><!-- applies the saved Light | Dark choice before first paint -->
 <style>
 :root{--font:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;--bg:#f3f4f6;--surface:#fff;--ink:#1b1f24;--ink-2:#48505c;--muted:#5f6773;--border:#dfe2e7;--border-strong:#c6cbd3;
  --accent:#2563EB;--accent-hover:#1d4ed8;--on:#fff;--r:6px;
  --cut-deep:var(--accent);--cut-mid:color-mix(in srgb,var(--accent) 52%,#fff);--cut-soft:color-mix(in srgb,var(--accent) 24%,#fff);--cut-near:color-mix(in srgb,var(--accent) 62%,#0aa6b8);--cut-butter:#FFD98A;--cut-blush:#F7B8A8}
-@media (prefers-color-scheme:dark){:root{--bg:#121417;--surface:#1a1d21;--ink:#e8eaed;--ink-2:#b4bac3;--muted:#99a1ac;--border:#2c3036;--border-strong:#3d434b;
- --accent:color-mix(in srgb,#2563EB 62%,#fff);--accent-hover:color-mix(in srgb,#2563EB 48%,#fff);--on:#111;
- --cut-deep:color-mix(in srgb,#2563EB 80%,#000);--cut-mid:color-mix(in srgb,#2563EB 60%,var(--surface));--cut-soft:color-mix(in srgb,#2563EB 30%,var(--surface))}}
+
 *{box-sizing:border-box}
 html,body{min-height:100%}
 body{margin:0;display:flex;flex-direction:column;min-height:100vh;font:15px/1.55 var(--font);color:var(--ink);
@@ -56,6 +55,10 @@ p{margin:0 0 10px;color:var(--ink-2);max-width:52ch}
 @media (max-width:767px){.mb-foot{flex-direction:column;align-items:center;text-align:center;gap:8px}.mb-foot-links{justify-content:center;margin:0}.mb-foot-links a{min-height:32px;display:inline-flex;align-items:center}}
 @media (max-width:520px){.card{padding:22px 18px 0}.art{width:calc(100% + 36px);margin:6px -18px 0}.btn{flex:1 1 100%}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+:root[data-theme="dark"]{--bg:#121417;--surface:#1a1d21;--ink:#e8eaed;--ink-2:#b4bac3;--muted:#99a1ac;--border:#2c3036;--border-strong:#3d434b;
+ --accent:color-mix(in srgb,#2563EB 62%,#fff);--accent-hover:color-mix(in srgb,#2563EB 48%,#fff);--on:#111;
+ --cut-deep:color-mix(in srgb,#2563EB 80%,#000);--cut-mid:color-mix(in srgb,#2563EB 60%,var(--surface));--cut-soft:color-mix(in srgb,#2563EB 30%,var(--surface))}
 </style>
 </head>
 <body>

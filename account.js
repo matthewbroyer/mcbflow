@@ -35,8 +35,8 @@ $('#themeToggle').addEventListener('click', () => {
 });
 
 /* ---------- small UI helpers ---------- */
-let toastTimer;
-function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
+
+function toast(msg) { if (window.MBUI) MBUI.toast(msg); }   // 6.3.0: the shared toast (mb-ui.js)
 function show(view) {
   $$('[data-view]').forEach(v => { v.hidden = v.dataset.view !== view; });
   const first = $(`[data-view="${view}"] input:not([type=hidden])`);
@@ -350,6 +350,65 @@ $('#exportBtn').addEventListener('click', e => {
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
     toast(`Exported ${records.length.toLocaleString()} record${records.length === 1 ? '' : 's'}`);
+  });
+});
+
+/* ---------- import an account export (6.3.0) ---------- */
+let importRows = null;
+$('#importBtn').addEventListener('click', () => { msg($('#syncMsg'), ''); $('#importFile').value = ''; $('#importFile').click(); });
+$('#importFile').addEventListener('change', async e => {
+  const file = e.target.files && e.target.files[0]; if (!file) return;
+  const out = $('#syncMsg'); importRows = null;
+  let payload;
+  try { payload = JSON.parse(await file.text()); } catch (err) { msg(out, 'That file isn’t valid JSON. Pick the file saved by “Export all synced data”.'); return; }
+  const recs = payload && payload.kind === 'account-export' && Array.isArray(payload.records) ? payload.records : null;
+  if (!recs) { msg(out, 'That isn’t an mcbflow.com account export. Pick the file saved by “Export all synced data” (an app’s own backup file is imported inside that app).'); return; }
+  const rows = recs.filter(r => r && typeof r.app === 'string' && typeof r.key === 'string' && r.key && !r.deleted && r.data != null);
+  if (!rows.length) { msg(out, 'That export has no records to import.'); return; }
+  importRows = rows;
+  const apps = [...new Set(rows.map(r => r.app))].map(a => APP_NAMES[a] || a);
+  const when = payload.exported ? new Date(payload.exported).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+  const other = payload.account && payload.account.email && user && payload.account.email.toLowerCase() !== String(user.email || '').toLowerCase();
+  $('#impSummary').innerHTML = `This file has <b>${rows.length.toLocaleString()} record${rows.length === 1 ? '' : 's'}</b> from ${esc(apps.join(', '))}${when ? `, exported ${esc(when)}` : ''}.` +
+    (other ? ` <b>It was exported from a different account (${esc(payload.account.email)}).</b>` : '');
+  msg($('#impMsg'), ''); $('input[name=impMode][value=missing]').checked = true;
+  openModal('impModal');
+});
+$('#impConfirm').addEventListener('click', e => {
+  if (!importRows || !user) return;
+  const mode = ($('input[name=impMode]:checked') || {}).value || 'missing', out = $('#impMsg');
+  busy(e.currentTarget, async () => {
+    let rows = importRows;
+    if (mode === 'missing') {      // keep anything on the account that is the same age or newer
+      const have = new Map(), PAGE = 1000;
+      for (let from = 0; ; from += PAGE) {
+        const { data, error } = await sb.from('app_data').select('app,key,updated_at').order('app').order('key').range(from, from + PAGE - 1);
+        if (error) { msg(out, friendly(error)); return; }
+        data.forEach(r => have.set(r.app + '\u0000' + r.key, Date.parse(r.updated_at) || 0));
+        if (data.length < PAGE) break;
+      }
+      rows = rows.filter(r => { const t = have.get(r.app + '\u0000' + r.key); return t == null || (Date.parse(r.updated_at) || 0) > t; });
+    }
+    if (!rows.length) { closeModal('impModal'); toast('Nothing to import: your account already has everything in that file'); importRows = null; return; }
+    const now = new Date().toISOString();
+    const send = rows.map(r => ({ user_id: user.id, app: r.app, key: r.key, data: r.data, deleted: false,
+      updated_at: mode === 'replace' ? now : (r.updated_at || now) }));
+    let done = 0, failed = 0, batch = [], bytes = 0;
+    const flush = async () => {
+      if (!batch.length) return;
+      const { error } = await sb.from('app_data').upsert(batch, { onConflict: 'user_id,app,key' });
+      if (error) failed += batch.length; else done += batch.length;
+      batch = []; bytes = 0;
+    };
+    for (const r of send) {
+      let n = 200; try { n += JSON.stringify(r.data).length; } catch (err) {}
+      if (batch.length && (batch.length >= 200 || bytes + n > 900000)) await flush();
+      batch.push(r); bytes += n;
+    }
+    await flush();
+    importRows = null; closeModal('impModal'); loadSummary();
+    if (failed) msg($('#syncMsg'), `Imported ${done.toLocaleString()} record${done === 1 ? '' : 's'}; ${failed.toLocaleString()} couldn’t be saved (an app that no longer syncs, or a record that’s too large).`);
+    else toast(`Imported ${done.toLocaleString()} record${done === 1 ? '' : 's'}. Your apps pick them up on their next sync.`);
   });
 });
 
